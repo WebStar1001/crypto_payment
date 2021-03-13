@@ -45,6 +45,9 @@ return [
 
     'debug' => env('APP_DEBUG', false),
 
+    'commonconfig' => array(
+        'path_image' => 'app/public'
+    ),
     /*
     |--------------------------------------------------------------------------
     | Application URL

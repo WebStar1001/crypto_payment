@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Http;
 
 class ProductActiveController extends Controller
 {
-
     public function store(Request $request): RedirectResponse
     {
         $validatedData = $request->validate([
@@ -26,7 +25,7 @@ class ProductActiveController extends Controller
                 'server_addr' => $request->server('SERVER_ADDR'),
                 'http_host' => $request->server('HTTP_HOST'),
             ]);
-            
+
             if ($response->successful()) {
                 file_put_contents($filePath, $response->body());
             } else {
