@@ -13,7 +13,7 @@
                                 {{ $title }}
                             </h3>
                             @if(has_permission('user.wallets.withdrawals.destroy') &&
-                        in_array($withdrawal->status, [STATUS_PROCESSING, STATUS_PENDING, STATUS_REVIEWING]))
+                        in_array($withdrawal->status, [STATUS_REVIEWING, STATUS_PENDING, STATUS_EMAIL_SENT]))
                                 <a href="{{ route('user.wallets.withdrawals.destroy', ['wallet' => $withdrawal->symbol, 'withdrawal' => $withdrawal->id]) }}"
                                    class="d-inline-block pull-right btn btn-danger confirmation"
                                    data-form-id="cancel-{{ $withdrawal->id }}" data-form-method="DELETE"

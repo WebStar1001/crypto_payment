@@ -31,6 +31,12 @@ class WithdrawalService
 
     public function destroy()
     {
+        if ($this->withdrawal->status !== STATUS_REVIEWING) {
+            return redirect()
+                ->back()
+                ->with(RESPONSE_TYPE_WARNING, __("The withdrawal cancellation is under process."));
+        }
+
         if ($this->withdrawal->update(['status' => STATUS_CANCELING])) {
             WithdrawalCancelJob::dispatch($this->withdrawal);
             return redirect()
@@ -44,10 +50,6 @@ class WithdrawalService
 
     public function cancel()
     {
-        if ($this->withdrawal->status !== STATUS_PENDING) {
-            return;
-        }
-
         DB::beginTransaction();
         try {
             //Change withdrawal status to FAILED
@@ -59,13 +61,7 @@ class WithdrawalService
             if (!$this->withdrawal->wallet()->increment('primary_balance', $this->withdrawal->amount)) {
                 throw new Exception(__("Failed to update wallet."));
             }
-            //Subtract system fee from system wallet
-            if (bccomp($this->withdrawal->system_fee, '0') > 0) {
-                if (!app(SystemWalletService::class)
-                    ->subtractFee($this->withdrawal->symbol, $this->withdrawal->system_fee)) {
-                    throw new Exception('Failed to subtract system fee from system wallet');
-                }
-            }
+
         } catch (Exception $exception) {
             DB::rollBack();
             Logger::error($exception, "[FAILED][WithdrawalService][cancel]");
@@ -78,6 +74,12 @@ class WithdrawalService
 
     public function approve()
     {
+        if ($this->withdrawal->status !== STATUS_REVIEWING) {
+            return redirect()
+                ->back()
+                ->with(RESPONSE_TYPE_WARNING, __("The withdrawal is under processing."));
+        }
+
         if (!$this->withdrawal->update(['status' => STATUS_PENDING])) {
             return [
                 RESPONSE_STATUS_KEY => false,
@@ -95,7 +97,7 @@ class WithdrawalService
 
     public function withdraw()
     {
-        $api = $this->withdrawal->coin->getAssociatedApi();
+        $api = $this->withdrawal->coin->getAssociatedApi($this->withdrawal->api);
         if (is_null($api)) {
             throw new Exception(__('Unable to call API'));
         } else {

@@ -2,9 +2,8 @@
 @section('title', __('Production Activation'))
 @section('content')
     @component('components.auth')
-
         <div class="mb-4">
-            <h2 class="text-center text-danger mb-2">{{  __('asdProduction Activation!')  }}</h2>
+            <h2 class="text-center text-danger mb-2">{{  __('Production Activation!')  }}</h2>
             <p class="text-center text-muted" style="font-size:16px ">{{ __('Product is expired or inactive. Please active it.') }}</p>
         </div>
         {{ Form::open(['route' => 'product-activation']) }}

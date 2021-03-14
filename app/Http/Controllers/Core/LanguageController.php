@@ -27,6 +27,7 @@ class LanguageController extends Controller
         $searchFields = [
             ['name', __('Name')],
             ['short_code', __('Short Code')],
+            ['direction', __('Direction')],
         ];
 
         $orderFields = [
@@ -54,7 +55,7 @@ class LanguageController extends Controller
     {
         DB::beginTransaction();
         try {
-            $params = $request->only(['name', 'short_code']);
+            $params = $request->only(['name', 'short_code','direction']);
 
             if ($request->hasFile('icon')) {
                 $filePath = config('commonconfig.language_icon');
@@ -87,7 +88,8 @@ class LanguageController extends Controller
 
         $languages[$language->short_code] = [
             'name' => $language->name,
-            'icon' => $language->icon
+            'icon' => $language->icon,
+            'direction' => $language->direction,
         ];
 
         Cache::set('languages', $languages);
@@ -104,7 +106,7 @@ class LanguageController extends Controller
     {
         DB::beginTransaction();
         try {
-            $params = $request->only(['name', 'short_code', 'is_active']);
+            $params = $request->only(['name', 'short_code', 'is_active','direction']);
 
             if ($language->short_code == settings('lang')) {
                 $params['is_active'] = ACTIVE;

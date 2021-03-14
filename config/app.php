@@ -45,9 +45,6 @@ return [
 
     'debug' => env('APP_DEBUG', false),
 
-    'commonconfig' => array(
-        'path_image' => 'app/public'
-    ),
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -181,8 +178,9 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-//        App\Providers\HorizonServiceProvider::class,
+        App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\PurifySetupProvider::class,
 
     ],
 

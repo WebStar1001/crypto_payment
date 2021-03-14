@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col">
                 @if(isset($title))
-                <h3>{{$title}}</h3>
+                <h3>{{ ucwords(preg_replace('/[-_]+/', ' ', $title)) }}</h3>
                 @endif
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">

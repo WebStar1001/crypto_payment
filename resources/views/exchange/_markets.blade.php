@@ -8,7 +8,7 @@
         <table class="table table-borderless lf-toggle-text-color w-100 mt-2 mb-0" id="market-table">
             <thead class="lf-toggle-bg-card font-size-12">
                 <tr>
-                    <th class="font-weight-light p-1 pr-4 lf-toggle-text-color">{{ __('Coin') }}</th>
+                    <th class="font-weight-light p-1 pr-4 lf-toggle-text-color text-left">{{ __('Coin') }}</th>
                     <th class="font-weight-light p-1 pr-4 lf-toggle-text-color text-center">{{ __('Price') }}</th>
                     <th class="font-weight-light p-1 pr-4 text-right">{{ __('Volume') }}</th>
                     <th class="font-weight-light p-1 pr-4 text-right">{{ __('Change') }}</th>

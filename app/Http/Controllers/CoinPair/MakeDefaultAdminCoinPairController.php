@@ -32,7 +32,6 @@ class MakeDefaultAdminCoinPairController extends Controller
 
         } catch (Exception $exception) {
             DB::rollBack();
-            logs()->error("Make default coin pair: " . $exception->getMessage());
             return redirect()->back()->with(RESPONSE_TYPE_ERROR, __('Failed to make default.'));
         }
 

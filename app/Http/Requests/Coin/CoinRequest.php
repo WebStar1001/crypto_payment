@@ -50,6 +50,17 @@ class CoinRequest extends FormRequest
                 'image',
                 'max:1024',
             ];
+            $rules['contract_address'] = [
+                'required_if:type,erc20',
+                'max:42',
+//                Rule::unique('coins')->ignore($this->route()->parameter('coin'))
+            ];
+            $rules['decimal_place'] = [
+                'required_if:type,erc20',
+                'integer',
+                'min:8',
+                'max:18',
+            ];
         }
 
         $rules['symbol'] = [

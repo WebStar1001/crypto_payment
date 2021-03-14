@@ -9,6 +9,12 @@
 {{ __('Verify') }}
 @endcomponent
 
+@if($isApi)
+{{ __('Or use the following code to verify your account -') }}
+
+{{ __('Verification Code') }} : {{ $verificationCode }}
+@endif
+
 {{ __('Thanks a lot for being with us,') }}<br>
 {{ company_name() }}
 @endcomponent

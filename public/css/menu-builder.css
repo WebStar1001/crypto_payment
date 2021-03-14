@@ -48,7 +48,7 @@
 }
 
 .lf-backend-navigation-wrapper .mymenu li.individual-menu-item .innermenu .innermenuhead > div:hover {
-  color: #EF404A;
+  color: #ef055c;
 }
 
 .lf-backend-navigation-wrapper .mymenu li.individual-menu-item .innermenu .innermenuhead > div:last-child {
@@ -105,7 +105,7 @@
 .lf-backend-navigation-wrapper .mymenu li.individual-menu-item .innermenu .innermenubody .deletebutton {
   background: none;
   border: none;
-  color: #EF404A;
+  color: #ef055c;
   cursor: pointer;
   font-size: 12px;
   font-style: italic;

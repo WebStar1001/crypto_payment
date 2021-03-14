@@ -23,7 +23,7 @@
                     <div class="card-body">
                         @if($wallet->coin->withdrawal_status == ACTIVE)
                             {!! Form::open(['route'=>['admin.system-wallets.withdrawal.store', $wallet->symbol], 'method' => 'post', 'class'=>'form-horizontal validator dark-text-color', 'id' => 'withdrawal']) !!}
-                            @if($wallet->coin->type === COIN_TYPE_CRYPTO)
+                            @if(in_array($wallet->coin->type,[COIN_TYPE_CRYPTO, COIN_TYPE_ERC20]))
                                 @include('withdrawal.user._crypto_form')
                             @else
                                 @include('withdrawal.user._fiat_from')
@@ -67,7 +67,7 @@
 @endsection
 
 @section('script')
-   @include('withdrawal.user._validation_script')
+    @include('withdrawal.user._validation_script')
     <script>
         "use strict";
 

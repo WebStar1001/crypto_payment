@@ -12,15 +12,19 @@ class ResetPassword extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public $user;
+    public $isApi;
+    public $verificationCode;
 
     /**
      * Create a new message instance.
      *
      * @param $user
      */
-    public function __construct($user)
+    public function __construct($user, $isApi=false, $verificationCode=null)
     {
         $this->user = $user;
+        $this->isApi = $isApi;
+        $this->verificationCode = $verificationCode;
     }
 
     /**

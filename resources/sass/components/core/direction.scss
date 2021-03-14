@@ -1,0 +1,791 @@
+@use '../base/_variables' as _variables;
+
+html[dir="rtl"] {
+
+    /*---------------------
+    TOP PRIMARY SCSS START
+    ---------------------*/
+    /*START: CENTRALIZING THE SECTION VERTICALLY AND HORIZONTALLY*/
+    .centralize-wrapper {
+        left: initial;
+        right: 0;
+
+        .centralize-inner {
+            .centralize-content {
+                text-align: right;
+            }
+        }
+    }
+    /*END: CENTRALIZING THE SECTION VERTICALLY AND HORIZONTALLY*/
+    .lf-nav-tab {
+        display: flex;
+        flex-wrap: wrap;
+
+        a {
+            border-left: none;
+            border-right: 1px solid;
+        }
+    }
+    .lf-post-content {
+        ol,
+        ul {
+            padding-left: initial;
+            padding-right: 15px;
+        }
+    }
+    /*start: footer section*/
+    .footer {
+        .footer-widget {
+            .footer-widget-contact-info {
+                li {
+                    .fa {
+                        margin-right: initial;
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+        .footer-social-media-links {
+            li {
+                &:last-child {
+                    margin-right: initial;
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+    /*end: footer section*/
+    /*Fixed side nav style:starts*/
+    @media all and (min-width: 992px) {
+        .lf-fixed-sidenav {
+            &.lf-headerless-body {
+                .wrapper {
+                    margin-left: initial;
+                    margin-right: 0px;
+                }
+            }
+
+            .wrapper {
+                transition: margin-right 0.3s linear;
+                margin-right: 280px;
+                margin-left: initial;
+            }
+        }
+    }
+    /*Fixed side nav style:ends*/
+    /*-------------------
+    TOP PRIMARY SCSS ENDS
+    -------------------*/
+
+    /*-----------------
+    TOP NAV SCSS STARTS
+    -----------------*/
+    /*NAVIGATION STARTS*/
+    .lf-main-nav {
+        > li {
+            margin-right: initial;
+            margin-left: 15px;
+
+            &.active {
+                > a {
+                    &::before {
+                        right: initial;
+                        left: 0;
+                    }
+                }
+            }
+
+            &:hover {
+                > a {
+                    &::before {
+                        right: initial;
+                        left: 0;
+                    }
+
+                    &::after {
+                        transform: rotate(-90deg);
+                    }
+                }
+            }
+
+            > a {
+                &::before {
+                    right: initial;
+                    left: 50%;
+                }
+            }
+        }
+
+        li {
+            a {
+                padding: 20px 0 20px 13px;
+
+                &::after {
+                    right: initial;
+                    left: 0;
+                    content: '\f104';
+                }
+
+                &:only-child {
+                    padding-right: initial;
+                    padding-left: 0;
+                }
+            }
+
+            &:last-child {
+                margin-right: initial;
+                margin-left: 0;
+            }
+
+            ul {
+                left: initial;
+                right: 0;
+
+                li {
+                    a {
+                        padding: 6px 8px 6px 21px;
+
+                        &::after {
+                            right: initial;
+                            left: 8px;
+                        }
+
+                        &:only-child {
+                            padding-right: 8px;
+                            padding-left: 8px;
+                        }
+                    }
+
+                    ul {
+                        left: initial;
+                        right: 100%;
+                    }
+                }
+            }
+        }
+    }
+    /*Mobile menu*/
+    .lf-responsive-menu-wrapper {
+        .slicknav_menu {
+
+            .slicknav_nav {
+                right: initial;
+                left: 0;
+
+                li {
+                    a, .slicknav_item.slicknav_row {
+                        padding-right: 10px;
+                        padding-left: 20px;
+
+                        .slicknav_arrow {
+                            right: initial;
+                            left: 10px;
+                        }
+                    }
+
+                    ul {
+                        margin-left: initial;
+                        margin-right: 10px;
+                        border-left: none;
+                        border-right: 1px dotted rgba(_variables.$black-color, 0.1);
+                    }
+                }
+            }
+        }
+    }
+    /*NAVIGATION ENDS*/
+    /*NAVIGATION VARIATION STARTS*/
+    .lf-template-header {
+
+        /*TRANSPARENT*/
+        &.header-transparent {
+            left: initial;
+            right: 0;
+        }
+    }
+    /*NAVIGATION VARIATION ENDS*/
+    .lf-user-menu {
+
+        > li {
+            margin-right: initial;
+            margin-left: 10px;
+
+            &:last-child {
+                margin-right: initial;
+                margin-left: 0;
+            }
+        }
+    }
+    .lf-side-nav-toggler {
+        margin-left: initial;
+        margin-right: 5px;
+    }
+    /*---------------
+    TOP NAV SCSS ENDS
+    ---------------*/
+
+    /*---------------------
+    TOP SIDE NAV SCSS START
+    ---------------------*/
+    .lf-side-nav {
+        left: initial;
+        right: -280px;
+
+        &.lf-side-nav-open {
+            left: initial;
+            right: 0;
+
+            .lf-side-nav-handler {
+                right: initial;
+                left: -35px;
+            }
+        }
+
+        .mCSB_inside {
+            > .mCSB_container {
+                margin-right: initial;
+                margin-left: 8px;
+            }
+        }
+
+        .mCS_no_scrollbar {
+            .mCSB_inside {
+                > .mCSB_container {
+                    margin-right: initial;
+                    margin-left: 0px;
+                }
+            }
+        }
+
+        .lf-side-nav-handler {
+            right: initial;
+            padding-left: initial;
+            border-radius: 5px 0 0 5px;
+            left: 5px;
+            padding-right: 6px;
+        }
+
+        .lf-side-nav-wrapper {
+            left: initial;
+            right: 0;
+
+            nav {
+                ul {
+                    li {
+                        a {
+                            &::after {
+                                right: initial;
+                                left: 8px;
+                            }
+                        }
+
+                        ul {
+                            padding: 0 15px 0 0;
+
+                            li {
+                                margin-left: initial;
+                                margin-right: -15px;
+
+                                a {
+                                    padding-left: initial;
+                                    padding-right: 20px;
+                                }
+
+                                ul {
+                                    li {
+                                        a {
+                                            padding-left: initial;
+                                            padding-right: 30px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    /*--------------------
+    TOP SIDE NAV SCSS ENDS
+    --------------------*/
+
+    /*----------------------------------
+    TOP DROPDOWN NOTIFICATION SCSS START
+    ----------------------------------*/
+    .lf-user-menu {
+        > li {
+            .lf-user-notification {
+                .dropdown-toggle {
+                    margin-right: initial;
+                    margin-left: 2px;
+
+                    .lf-notification-count {
+                        left: initial;
+                        right: 100%;
+                        text-align: center;
+                        margin-left: initial;
+                        margin-right: -8px;
+                    }
+                }
+            }
+        }
+    }
+    /*---------------------------------
+    TOP DROPDOWN NOTIFICATION SCSS ENDS
+    ---------------------------------*/
+
+    /*--------------------------
+    TOP DROPDOWN USER SCSS START
+    ---------------------------*/
+
+    .lf-user-menu {
+        > li {
+            .lf-user-dropdown {
+                .dropdown-menu {
+                    .dropdown-header {
+                        .user-info {
+                            padding-left: initial;
+                            padding-right: 5px;
+                        }
+                    }
+                }
+
+                i {
+                    margin-right: initial;
+                    margin-left: 2px;
+                }
+            }
+        }
+    }
+    /*-------------------------
+    TOP DROPDOWN USER SCSS ENDS
+    -------------------------*/
+
+    /*------------------------------
+    TOP DROPDOWN LANGUAGE SCSS START
+    ------------------------------*/
+    .lf-user-menu {
+        > li {
+            .lf-language {
+                .dropdown-toggle {
+                    .lf-language-text {
+                        padding-left: initial;
+                        padding-right: 24px;
+                        &::before {
+                            left: initial;
+                            right: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    /*-----------------------------
+    TOP DROPDOWN LANGUAGE SCSS ENDS
+    -----------------------------*/
+
+    /*-------------------------
+    TOP CUSTOM INPUTS SCSS ENDS
+    --------------------------*/
+    /*CHECKBOX STYLE STARTS*/
+    .lf-checkbox {
+        label {
+            padding-left: initial;
+            padding-right: 30px;
+
+            &::before {
+                left: initial;
+                right: 0;
+            }
+        }
+    }
+    /*CHECKBOX STYLE ENDS*/
+    /*RADIO STYLE STARTS*/
+    .lf-radio {
+        label {
+            padding-left: initial;
+            padding-right: 24px;
+            &::before {
+                left: initial;
+                right: 0;
+            }
+        }
+    }
+    /*RADIO STYLE ENDS*/
+    /*SWITCH STYLE STARTS*/
+    .lf-switch {
+        .lf-switch-input {
+
+            &:checked {
+                + .lf-switch-label {
+                    &::before {
+                        left: initial;
+                        right: 0;
+                    }
+                }
+            }
+        }
+    }
+    /*SWITCH STYLE ENDS*/
+    /*SELECT STYLE STARTS*/
+    .lf-select {
+        &::after {
+            right: initial;
+            left: 10px;
+        }
+
+        select {
+            padding-right: initial;
+            padding-left: 26px;
+        }
+    }
+    /*SELECT STYLE ENDS*/
+    /*Jasny Bootstrap File Input Style Start*/
+    .fileinput {
+        &.fileinput-exists {
+            #remove {
+                float: left;
+            }
+        }
+    }
+    /*Jasny Bootstrap File Input Style End*/
+    /*-------------------------
+    TOP CUSTOM INPUTS SCSS ENDS
+    --------------------------*/
+
+    /*-------------------------
+    TOP FLASH MESSAGE SCSS START
+    --------------------------*/
+    .flash-message {
+        left: initial;
+        right: 0;
+        .centralize-content {
+            .flash-close {
+                &.close {
+                    right: initial;
+                    left: -4px;
+                }
+            }
+        }
+    }
+    /*-------------------------
+    TOP FLASH MESSAGE SCSS ENDS
+    --------------------------*/
+
+    /*--------------------
+    TOP FILTERS SCSS START
+    --------------------*/
+    .lf-filter-form {
+        > div {
+            > div {
+                &:first-child {
+                    margin-left: initial !important;
+                    margin-right: 0 !important;
+                }
+            }
+        }
+    }
+    /*-------------------
+    TOP FILTERS SCSS ENDS
+    -------------------*/
+
+    /*-------------------------
+    TOP ADVANCE FILTERS SCSS START
+    --------------------------*/
+    .lf-filter-container {
+        .lf-filter-wrapper {
+            .lf-filter-checkbox {
+                &:checked {
+                    + .lf-filter-checkbox-label {
+                        &::after {
+                            left: initial;
+                            right: 14px;
+                        }
+
+                        &::before {
+                            padding-left: initial;
+                            padding-right: 1px;
+                        }
+                    }
+                }
+            }
+
+            .lf-filter-checkbox-label {
+                padding-left: initial;
+                padding-right: 38px;
+                &::after {
+                    left: initial;
+                    right: 0;
+                }
+
+                &::before {
+                    left: initial;
+                    right: 2px;
+                }
+            }
+        }
+    }
+    /*-------------------------
+    TOP ADVANCE FILTERS SCSS ENDS
+    --------------------------*/
+
+    /*----------------------
+    TOP DATATABLE SCSS START
+    -----------------------*/
+    table {
+        &.lf-data-table {
+            &.dtr-inline {
+                &.collapsed {
+                    > tbody {
+                        > tr {
+                            > td {
+                                &:first-child {
+                                    padding-left: 12px !important;
+                                    padding-right: 30px !important;
+
+                                    &::before {
+                                        left: initial;
+                                        right: 5px;
+                                    }
+                                }
+
+                                &.child {
+                                    padding-left: initial !important;
+                                    padding-right: 5px !important;
+
+                                    ul {
+                                        padding-left: initial !important;
+                                        padding-right: 10px !important;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                > thead {
+                    > tr {
+                        > th {
+                            padding: 20px 10px 20px 20px;
+
+                            &.sorting {
+                                padding-right: 10px;
+                                padding-left: 22px;
+                            }
+
+                            &.no-sort {
+                                padding-right: initial;
+                                padding-left: 10px;
+                            }
+
+                            &::before {
+                                right: initial;
+                                left: 10px;
+                            }
+
+                            &::after {
+                                right: initial;
+                                left: 2px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .lf-action {
+        text-align: left;
+    }
+    /*----------------------
+    TOP DATATABLE SCSS ENDS
+    -----------------------*/
+
+    /*--------------------
+    TOP EXCHANGE SCSS START
+    ---------------------*/
+    .section-loading {
+        left: initial;
+        right: 0;
+    }
+    .market-nav {
+        .nav-item {
+            margin-right: initial;
+            margin-left: 20px;
+        }
+    }
+    @media (min-width: 768px) {
+        .lf-border-md-right {
+            border-right: initial;
+            border-left: 1px solid;
+        }
+    }
+    /*--------------------
+    TOP EXCHANGE SCSS ENDS
+    ---------------------*/
+
+    /*--------------------
+    TOP COIN BOX SCSS START
+    ---------------------*/
+    .coin-box {
+        &::after {
+            left: initial;
+            right: 0;
+        }
+    }
+    .box-action-btn.dropdown-toggle {
+        right: initial;
+        left: 0.25rem;
+    }
+    /*--------------------
+    TOP COIN BOX SCSS ENDS
+    ---------------------*/
+
+    /*------------------------
+    TOP CART LOADER SCSS START
+    ------------------------*/
+    .cart-loader {
+        left: initial;
+        right: 0;
+    }
+    .lds-cart {
+        div {
+            left: initial;
+            right: 8px;
+            &:nth-child(1) {
+                left: initial;
+                right: 8px;
+            }
+            &:nth-child(2) {
+                left: initial;
+                right: 32px;
+            }
+            &:nth-child(3) {
+                left: initial;
+                right: 56px;
+            }
+        }
+    }
+    /*------------------------
+    TOP CART LOADER SCSS ENDS
+    ------------------------*/
+
+    /*------------------
+    TOP LIGHT SCSS START
+    ------------------*/
+    .light {
+        .lf-nav-tab {
+            a {
+                border-right-color: _variables.$border-card-light;
+            }
+        }
+    }
+    /*------------------
+    TOP LIGHT SCSS ENDS
+    ------------------*/
+
+    /*-----------------
+    TOP DARK SCSS START
+    -----------------*/
+    .dark {
+        .lf-nav-tab {
+            a {
+                border-right-color: _variables.$border-card-dark;
+            }
+        }
+    }
+    /*-----------------
+    TOP DARK SCSS ENDS
+    -----------------*/
+}
+
+
+
+html[dir="rtl"]{
+    .dropdown-menu-left{
+        left: 0;
+        right: initial;
+    }
+    .dropdown-menu-right{
+        left: initial;
+        right: 0;
+    }
+    .direction-before::before {
+        display: inline-block;
+        transform: rotateY(180deg);
+    }
+    .direction-after::after {
+        display: inline-block;
+        transform: rotateY(180deg);
+    }
+    direction-img {
+        display: inline-block;
+        transform: rotateY(180deg);
+    }
+    .cmb_custom_tab_item{
+        margin-right:0 ;
+        margin-left: 50px !important;
+    }
+    table {
+        .dataTable {
+            thead {
+                .sorting::before,
+                .sorting_asc::before,
+                .sorting_desc::before,
+                .sorting_asc_disabled::before,
+                .sorting_desc_disabled::before {
+                    right: initial;
+                    left: 1em;
+                }
+                .sorting::after,
+                .sorting_asc::after,
+                .sorting_desc::after,
+                .sorting_asc_disabled::after,
+                .sorting_desc_disabled::after {
+                    right: initial;
+                    left: 0.5em;
+                }
+                > tr {
+                    > th{
+                        &.sorting_asc,
+                        &.sorting_desc,
+                        &.sorting {
+                            padding-right: 10px;
+                        }
+                    }
+                    > td {
+                        &.sorting_asc,
+                        &.sorting_desc,
+                        &.sorting{
+                            padding-right: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .w-card-title{
+        padding-right:initial;
+        padding-left:40px;
+    }
+    .pull-right{
+        float:left;
+    }
+    .pull-left{
+        float:right;
+    }
+    .mCSB_container_wrapper{
+        &.mCS_no_scrollbar_x.mCS_x_hidden {
+            > .mCSB_container {
+                left: 0 !important;
+            }
+        }
+    }
+    .mCS-dir-rtl {
+        > .mCSB_inside {
+            > .mCSB_container_wrapper {
+                margin-right: 0 !important;
+                margin-left: 20px !important;
+            }
+        }
+    }
+}

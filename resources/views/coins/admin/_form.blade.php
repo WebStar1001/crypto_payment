@@ -1,9 +1,12 @@
 {{--type--}}
 @if( !isset($coin))
     <div class="form-group my-3">
-        <label for="type" class="control-label required">{{ __('Coin Type') }}</label>
+        <label for="type" class="control-label required">{{ __('Coin Type') }}
+            <small class="text-warning d-block">{{ __('Type cannot be changed after creating the coin.') }}</small>
+        </label>
+
         {{ Form::select('type', $coinTypes, null,['class' => form_validation($errors, 'type'), 'id' => 'type',
-        'placeholder' => __('Select Coin Type')]) }}
+        'placeholder' => __('Select Coin Type'), "@change" => "onTypeChange"]) }}
         <span class="invalid-feedback" data-name="type">{{ $errors->first('type') }}</span>
     </div>
 @endif
@@ -21,6 +24,26 @@
     {{ Form::text('name',  null, ['class'=> form_validation($errors, 'name'), 'id' => 'name',
     'placeholder' => __('ex: United States Dollar')]) }}
     <span class="invalid-feedback" data-name="name">{{ $errors->first('name') }}</span>
+</div>
+
+<div v-if="showERC20Fields">
+    {{--contract_address--}}
+    <div class="form-group my-3">
+        <label for="contract_address" class="control-label required">{{ __('Contract Address') }}</label>
+        {{ Form::text('contract_address',  null, ['class'=> form_validation($errors, 'contract_address'), 'id' => 'contract_address',
+        'placeholder' => __('ex: 0xD653D79b694EbB9De42Ee10f0AAA610615De96E7')]) }}
+        <span class="invalid-feedback" data-contract_address="contract_address">{{ $errors->first('contract_address') }}</span>
+    </div>
+
+    {{--decimal_place--}}
+    <div class="form-group my-3">
+        <label for="decimal_place" class="control-label required">{{ __('Decimal Place') }}
+            <small class="text-warning d-block">{{ __('Make sure the decimal place is the same as your token decimal place. Otherwise, it can cause great damage.') }}</small>
+        </label>
+        {{ Form::text('decimal_place',  null, ['class'=> form_validation($errors, 'decimal_place'), 'id' => 'decimal_place',
+        'placeholder' => __('ex: 18')]) }}
+        <span class="invalid-feedback" data-decimal_place="decimal_place">{{ $errors->first('decimal_place') }}</span>
+    </div>
 </div>
 
 {{--icon--}}
@@ -49,7 +72,9 @@
 
 {{--is_active--}}
 <div class="form-group my-3">
-    <label for="is_active" class="control-label required">{{ __('Active Status') }}</label>
+    <label for="is_active" class="control-label required">{{ __('Active Status') }}
+        <small class="text-warning d-block">{{ __('Disable means deactivating all associated coin pair(s).') }}</small>
+    </label>
     <div>
         <div class="lf-switch">
             {{ Form::radio('is_active', ACTIVE, true, ['id' => 'is_active-active', 'class' => 'lf-switch-input']) }}
@@ -58,9 +83,6 @@
             {{ Form::radio('is_active', INACTIVE, null, ['id' => 'is_active-inactive', 'class' => 'lf-switch-input']) }}
             <label for="is_active-inactive" class="lf-switch-label lf-switch-label-off">{{ __('Disable') }}</label>
         </div>
-        <span class="text-muted d-block">
-            {{ __('Disable means deactivating all associated coin pair(s).') }}
-        </span>
         <span class="invalid-feedback" data-name="is_active">{{ $errors->first('is_active') }}</span>
     </div>
 </div>

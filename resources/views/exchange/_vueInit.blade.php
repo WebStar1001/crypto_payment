@@ -1,6 +1,5 @@
 <script>
     "use strict";
-
     const vueInstance = new Vue({
         el: '#app',
         data: {
@@ -97,10 +96,12 @@
         },
         methods: {
             onStopPriceChangeHandler(event, type) {
-                let newPriceRules = {
-                    limit: "required|numeric|decimalScale:11,8|between:" + this.getPriceTolerance(event.target.value).join(','),
-                };
-                eval(type).setRules(newPriceRules);
+                if (this.settingTolerance > 0) {
+                    let newPriceRules = {
+                        limit: "required|numeric|decimalScale:11,8|between:" + this.getPriceTolerance(event.target.value).join(','),
+                    };
+                    eval(type).setRules(newPriceRules);
+                }
             },
             setLimitBuyPrice(price) {
                 this.limitBuyFormData.price = price;
@@ -216,11 +217,13 @@
 
                 this.pairDetail.loading = false;
 
-                let newPriceRules = {
-                    price: "required|numeric|decimalScale:11,8|between:" + this.getPriceTolerance(this.pairDetail.lastPrice).join(','),
-                };
-                limitBuyForm.setRules(newPriceRules);
-                limitSellForm.setRules(newPriceRules);
+                if (this.settingTolerance > 0) {
+                    let newPriceRules = {
+                        price: "required|numeric|decimalScale:11,8|between:" + this.getPriceTolerance(this.pairDetail.lastPrice).join(','),
+                    };
+                    limitBuyForm.setRules(newPriceRules);
+                    limitSellForm.setRules(newPriceRules);
+                }
             },
             initAskOrderTable() {
                 const currentInstance = this;
@@ -266,7 +269,7 @@
                         },
                         {
                             targets: 1,
-                            className: 'text-right w-30'
+                            className: 'text-center w-30'
                         },
                         {
                             targets: 2,
@@ -301,7 +304,7 @@
                         currentInstance.setLimitBuyTotal(tableData.total);
                         currentInstance.setStopLimitValue(tableData.price);
 
-                        setTimeout(function() {
+                        setTimeout(function () {
                             limitBuyForm.reFormat();
                             stopLimitBuyForm.reFormat();
                         }, 100);
@@ -354,7 +357,7 @@
                         },
                         {
                             targets: 1,
-                            className: 'text-right w-30'
+                            className: 'text-center w-30'
                         },
                         {
                             targets: 2,
@@ -391,7 +394,7 @@
                         currentInstance.setLimitSellTotal(tableData.total);
                         currentInstance.setStopLimitValue(tableData.price);
 
-                        setTimeout(function() {
+                        setTimeout(function () {
                             limitSellForm.reFormat();
                             stopLimitSellForm.reFormat();
                         }, 100);
@@ -454,7 +457,7 @@
                         },
                         {
                             targets: 1,
-                            className: 'text-right w-30'
+                            className: 'text-center w-30'
                         },
                         {
                             targets: 2,
@@ -508,7 +511,7 @@
             initChartOptions() {
                 this.chartOptions.rootPath = "{{ asset('/') }}";
 
-                @if (isset($_COOKIE['style']) &&  $_COOKIE['style'] == 'light')
+                @if (is_light_mode(true, false))
                     this.chartOptions.chartColor = {
                     theme: 'light',
                     bg: '#ffffff',
@@ -683,7 +686,7 @@
                         currentInstance.updateOrderTableOnOrderCanceledBroadCast(data);
                     })
                     .listen('.order.exchanged', function (data) {
-                        if(_.isObject(data)){
+                        if (_.isObject(data)) {
                             data = _.compact(_.values(data))
                         }
                         currentInstance.updatePublicTablesOnOrderExchangedBroadCast(data);
@@ -838,15 +841,15 @@
                     columnDefs: [
                         {
                             targets: 0,
-                            className: 'text-left p-1 border-top lf-toggle-border-color align-middle'
+                            className: 'text-center p-1 border-top lf-toggle-border-color align-middle'
                         },
                         {
                             targets: 1,
-                            className: 'text-left p-1 border-left border-top lf-toggle-border-color align-middle'
+                            className: 'text-center p-1 border-left border-top lf-toggle-border-color align-middle'
                         },
                         {
                             targets: '_all',
-                            className: 'text-right p-1 border-left border-top lf-toggle-border-color align-middle',
+                            className: 'text-center p-1 border-left border-top lf-toggle-border-color align-middle',
                             orderable: false
                         }
                     ],
@@ -891,15 +894,15 @@
                     columnDefs: [
                         {
                             targets: 0,
-                            className: 'text-left p-1 border-top lf-toggle-border-color'
+                            className: 'text-center p-1 border-top lf-toggle-border-color'
                         },
                         {
                             targets: 1,
-                            className: 'text-left p-1 border-left border-top lf-toggle-border-color'
+                            className: 'text-center p-1 border-left border-top lf-toggle-border-color'
                         },
                         {
                             targets: '_all',
-                            className: 'text-right p-1 border-left border-top lf-toggle-border-color',
+                            className: 'text-center p-1 border-left border-top lf-toggle-border-color',
                             orderable: false
                         }
                     ]

@@ -25,6 +25,10 @@ class WithdrawalCancelJob implements ShouldQueue
 
     public function handle()
     {
+        if ( !in_array($this->withdrawal->status, [STATUS_CANCELING, STATUS_PENDING]) ) {
+            return false;
+        }
+
         app(WithdrawalService::class, [$this->withdrawal])->cancel();
     }
 }

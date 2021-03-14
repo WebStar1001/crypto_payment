@@ -12,9 +12,6 @@
         <a class="btn lf-toggle-border border" href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{ urlencode($url) }}&amp;title={{ url($title) }}&amp;" target="_blank">
             <i class="fa fa-linkedin"></i>
         </a>
-        <a class="btn lf-toggle-border border" href="http://pinterest.com/pin/create/button/?url={{ urlencode($url) }}&amp;description={{ urlencode($title) }}&amp;media={{ urlencode($image) }}" target="_blank">
-            <i class="fa fa-pinterest"></i>
-        </a>
         <a class="btn lf-toggle-border border" href="mailto:?subject={{ urlencode($title) }}&amp;body={{ urlencode($url) }}" target="_self" rel="noopener noreferrer">
             <i class="fa fa-envelope"></i>
         </a>

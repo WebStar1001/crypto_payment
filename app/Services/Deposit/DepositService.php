@@ -48,7 +48,7 @@ class DepositService
                     'system_fee' => $systemFee,
                     'txn_id' => $depositData['txn_id'],
                     'api' => $depositData['api'],
-                    'status' => STATUS_PENDING,
+                    'status' => isset($depositData['status']) ? $depositData['status'] : STATUS_PENDING,
                 ];
 
                 $deposit = WalletDeposit::create($params);
@@ -67,7 +67,7 @@ class DepositService
                 // User Notification
                 Notification::create([
                     'user_id' => $deposit->user_id,
-                    'message' => __("You\'ve just received :amount :coin", [
+                    'message' => __("You've just received :amount :coin", [
                         'amount' => $actualAmount,
                         'coin' => $deposit->symbol,
                     ]),

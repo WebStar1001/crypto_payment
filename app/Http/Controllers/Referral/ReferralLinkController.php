@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class ReferralLinkController extends Controller
 {
-    public function show()
+    public function __invoke()
     {
         $user = Auth::user();
         $data['title'] = __('Referral');

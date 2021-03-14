@@ -29,7 +29,7 @@
                 },
                 {
                     targets: 0,
-                    className: 'text-green w-30'
+                    className: 'text-left text-green w-30'
                 },
                 {
                     targets: 1,

@@ -3,7 +3,7 @@
 return [
     'configurable_routes' => [
         'admin_section' => [
-            'application-settings' => [
+            'application_settings' => [
                 ROUTE_GROUP_MODIFIER_ACCESS => [
                     'application-settings.index',
                     'application-settings.edit',
@@ -78,6 +78,12 @@ return [
             'log_viewer' => [
                 ROUTE_GROUP_READER_ACCESS => [
                     'logs.index'
+                ]
+            ],
+            'node_status' => [
+                ROUTE_GROUP_READER_ACCESS => [
+                    'admin.node-status.index',
+                    'admin.node-status.show',
                 ]
             ],
             'language_managements' => [
@@ -212,25 +218,31 @@ return [
             ],
             'page_management' => [
                 ROUTE_GROUP_READER_ACCESS => [
-                    'pages.index'
+                    'admin.pages.index'
                 ],
                 ROUTE_GROUP_CREATION_ACCESS => [
-                    'pages.create',
-                    'pages.store',
+                    'admin.pages.create',
+                    'admin.pages.store',
                 ],
                 ROUTE_GROUP_MODIFIER_ACCESS => [
-                    'pages.edit',
-                    'pages.update',
-                    'pages.toggle-status',
+                    'admin.pages.edit',
+                    'admin.pages.update',
+                    'admin.pages.visual-edit',
+                    'admin.pages.visual-edit',
+                    'admin.pages.published',
+                    'admin.pages.home-page',
+                    'admin.dynamic-content',
                 ],
                 ROUTE_GROUP_DELETION_ACCESS => [
-                    'pages.destroy'
+                    'admin.pages.destroy'
                 ]
             ],
             'review_deposit_management' => [
                 ROUTE_GROUP_READER_ACCESS => [
                     'admin.review.bank-deposits.index',
                     'admin.review.bank-deposits.show',
+                    'admin.history.ethereum-deposits.index',
+                    'admin.history.ethereum-deposits.show',
                 ],
                 ROUTE_GROUP_MODIFIER_ACCESS => [
                     'admin.adjust.bank-deposits',
@@ -292,6 +304,7 @@ return [
                     'user.wallets.withdrawals.show',
                     'user.wallets.withdrawals.create',
                     'user.wallets.withdrawals.store',
+                    'user.wallets.withdrawals.confirmation'
                 ],
             ],
             'back_accounts' => [
@@ -361,6 +374,18 @@ return [
                     'exchange.get-wallet-summary'
                 ]
             ],
+            'personal_access_token' => [
+                ROUTE_GROUP_READER_ACCESS => [
+                    'personal-access-tokens.index',
+                ],
+                ROUTE_GROUP_CREATION_ACCESS => [
+                    'personal-access-tokens.create',
+                    'personal-access-tokens.store',
+                ],
+                ROUTE_GROUP_DELETION_ACCESS => [
+                    'personal-access-tokens.destroy',
+                ],
+            ],
         ],
     ],
     'role_based_routes' => [
@@ -371,6 +396,7 @@ return [
 
     ROUTE_TYPE_AVOIDABLE_MAINTENANCE => [
         'login',
+        'login.post',
     ],
 
     ROUTE_TYPE_AVOIDABLE_UNVERIFIED => [

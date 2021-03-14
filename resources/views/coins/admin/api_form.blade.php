@@ -7,8 +7,8 @@
             {{--api--}}
             <div class="form-group">
                 <label for="api" class="control-label required">{{ __('Select API') }}</label>
-                @if($coin->type === COIN_TYPE_CRYPTO)
-                    {{ Form::select('api', crypto_apis(), null,['class' => form_validation($errors, 'api'),'id' => 'api', 'placeholder' => __('Select API')]) }}
+                @if(in_array($coin->type, [COIN_TYPE_CRYPTO,COIN_TYPE_ERC20]))
+                    {{ Form::select('api', crypto_apis(), null,['class' => form_validation($errors, 'api'),'id' => 'api', 'placeholder' => __('Select API'), '@change' => 'onChangeApi']) }}
                 @else
                     @forelse(fiat_apis() as $api => $apiName)
                         <div class="lf-checkbox p-0 my-2">
@@ -20,6 +20,7 @@
                         {{ __('No API is available.') }}
                     @endforelse
                     <span class="invalid-feedback" data-name="api[]">{{ $errors->first('api') }}</span>
+                @endif
             </div>
 
             <div v-if="showBanks">
@@ -46,7 +47,14 @@
                     <span class="invalid-feedback" data-name="banks[]">{{ $errors->first('banks') }}</span>
                 </div>
             </div>
-            @endif
+
+            <div v-if="showPropertyId">
+                <div class="form-group">
+                    <label for="api" class="control-label">{{ __('Property ID') }}</label>
+                        {{ Form::text('property_id', null, ['class' => form_validation($errors, 'property_id'), 'id' => 'property_id', 'placeholder' => __('ex: 31')]) }}
+                    <span class="invalid-feedback" data-name="property_id">{{ $errors->first('property_id') }}</span>
+                </div>
+            </div>
 
             {{--submit button--}}
             <div class="form-group my-3">
@@ -77,11 +85,16 @@
         new Vue({
             el: '#app',
             data: {
-                showBanks: "{{  (old('banks.0', ($coin->type === COIN_TYPE_FIAT && isset($coin->api['selected_banks']))) ? true : false )}}"
+                showBanks: "{{  (old('banks.0', ($coin->type === COIN_TYPE_FIAT && isset($coin->api['selected_banks']))) ? true : false )}}",
+                showPropertyId: "{{old('api', isset($coin->api['selected_apis']) ? $coin->api['selected_apis'] : "")}}" === "{{API_OMNI_LAYER}}"
             },
             methods: {
                 onSelectBankMethods: function (event) {
                     this.showBanks = event.target.checked;
+                },
+                onChangeApi: function (event) {
+                    console.log(event.target.value)
+                    this.showPropertyId = event.target.value === "{{API_OMNI_LAYER}}";
                 }
             }
         });

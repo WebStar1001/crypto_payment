@@ -33,7 +33,8 @@
                                 <td>{{ $coin->name }}</td>
                                 <td>{{ coin_types($coin->type) }}</td>
                                 <td class="text-center">
-                                    <span class="font-size-12 py-1 px-2 badge badge-{{ config('commonconfig.active_status.' . $coin->is_active . '.color_class') }}">{{ active_status($coin->is_active) }}
+                                    <span
+                                        class="font-size-12 py-1 px-2 badge badge-{{ config('commonconfig.active_status.' . $coin->is_active . '.color_class') }}">{{ active_status($coin->is_active) }}
                                     </span>
                                 </td>
                                 <td>{{ $coin->created_at->toFormattedDateString() }}</td>
@@ -49,25 +50,33 @@
                                         <div class="dropdown-menu dropdown-menu-right"
                                              role="menu">
                                             @if(has_permission('coins.revenue-graph'))
-                                                <a href="{{ route('coins.revenue-graph', $coin->symbol) }}" class="dropdown-item"><i class="fa fa-line-chart"></i> {{ __('Revenue Graph') }}</a>
+                                                <a href="{{ route('coins.revenue-graph', $coin->symbol) }}" class="dropdown-item"><i
+                                                        class="fa fa-line-chart"></i> {{ __('Revenue Graph') }}</a>
                                             @endif
 
                                             @if(has_permission('coins.edit'))
-                                                <a href="{{ route('coins.edit', $coin->symbol) }}" class="dropdown-item"><i class="fa fa-pencil"></i> {{ __('Edit') }}</a>
+                                                <a href="{{ route('coins.edit', $coin->symbol) }}" class="dropdown-item"><i
+                                                        class="fa fa-pencil"></i> {{ __('Edit') }}</a>
                                             @endif
 
-                                            @if(has_permission('coins.reset-addresses') && $coin->type === COIN_TYPE_CRYPTO)
-                                                <a data-form-id="update-{{ $coin->symbol }}" data-form-method="PUT" href="{{ route('coins.reset-addresses', $coin->symbol) }}" class="dropdown-item confirmation" data-alert="{{__('This will remove all addresses related to this coin and future deposits won\'t work with the current addresses. Do you want to continue?')}}"><i class="fa fa-trash-o"></i> {{ __('Remove Addresses') }}</a>
+                                            @if(has_permission('coins.reset-addresses') && in_array($coin->type,[COIN_TYPE_CRYPTO, COIN_TYPE_ERC20]))
+                                                <a data-form-id="update-{{ $coin->symbol }}" data-form-method="PUT"
+                                                   href="{{ route('coins.reset-addresses', $coin->symbol) }}" class="dropdown-item confirmation"
+                                                   data-alert="{{__('This will remove all addresses related to this coin and future deposits won\'t work with the current addresses. Do you want to continue?')}}"><i
+                                                        class="fa fa-trash-o"></i> {{ __('Remove Addresses') }}</a>
                                             @endif
 
-                                                @if(has_permission('coins.toggle-status'))
-                                                <a data-form-id="update-{{ $coin->symbol }}" data-form-method="PUT" href="{{ route('coins.toggle-status', $coin->symbol) }}" class="dropdown-item confirmation" data-alert="{{__('Do you want to change this stock item\'s status?')}}"><i class="fa fa-edit"></i> {{ __('Change Status') }}</a>
+                                            @if(has_permission('coins.toggle-status'))
+                                                <a data-form-id="update-{{ $coin->symbol }}" data-form-method="PUT"
+                                                   href="{{ route('coins.toggle-status', $coin->symbol) }}" class="dropdown-item confirmation"
+                                                   data-alert="{{__('Do you want to change this stock item\'s status?')}}"><i
+                                                        class="fa fa-edit"></i> {{ __('Change Status') }}</a>
                                             @endif
                                         </div>
                                     </div>
                                 </td>
                             </tr>
-                            @endforeach
+                        @endforeach
                     @endcomponent
                 </div>
                 {{ $dataTable['pagination'] }}

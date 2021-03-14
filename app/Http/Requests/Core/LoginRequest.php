@@ -28,7 +28,11 @@ class LoginRequest extends FormRequest
             'password' => 'required|between:1,255',
         ];
 
-        if( env('APP_ENV') != 'local' && settings('display_google_captcha') == ACTIVE )
+        if(
+            env('APP_ENV') != 'local' &&
+            settings('display_google_captcha') == ACTIVE &&
+            !$this->is('api/*')
+        )
         {
             $validation['g-recaptcha-response'] = 'required|captcha';
         }

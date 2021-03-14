@@ -26,7 +26,11 @@ class ApplicationSettingService
         $this->type = $type;
         $this->subType = $subType;
         $settingsRequest = $request->settings;
+        if (empty($settingsRequest)) {
+            $settingsRequest = [];
+        }
         $uploadAbleImages = [];
+
         foreach ($settingsRequest as $field => $value) {
             $this->validate($field, $value);
             if (is_array($value)) {
@@ -52,18 +56,20 @@ class ApplicationSettingService
 
         $existingSettingsFromDatabase = ApplicationSetting::whereIn('slug', array_keys($settingsRequest))->get()->toArray();
         $updateAbleSettings = array_diff_assoc($settingsRequest, $existingSettingsFromDatabase);
+        $imageUploadCount = 0;
         if (!empty($uploadAbleImages)) {
-            $this->uploadImages($uploadAbleImages, $updateAbleSettings);
+            $this->uploadImages($uploadAbleImages, $updateAbleSettings, $imageUploadCount);
         }
 
 
         if (!empty($updateAbleSettings)) {
-            $updateCount = 0;
+            $updateCount = $imageUploadCount;
             foreach ($updateAbleSettings as $field => $value) {
                 $attributes = ['slug' => $field, 'value' => $value];
                 $conditions = ['slug' => $field];
                 if ($isUpdate = ApplicationSetting::updateOrCreate($conditions, $attributes)) {
                     if ($isUpdate->wasRecentlyCreated || $isUpdate->wasChanged()) {
+
                         $updateCount++;
                     }
                 }
@@ -80,6 +86,7 @@ class ApplicationSettingService
                 Cache::forever("appSettings", $cachedSettings);
 
                 $message = __(':updateCount setting(s) have been updated!', ['updateCount' => $updateCount]);
+
                 return [
                     RESPONSE_STATUS_KEY => true,
                     RESPONSE_MESSAGE_KEY => $message,
@@ -134,6 +141,11 @@ class ApplicationSettingService
             case 'email':
                 if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
                     $this->errorMessages[$field][] = __('This field must be email.');
+                }
+                break;
+            case 'url':
+                if ($value && !filter_var($value, FILTER_VALIDATE_URL)) {
+                    $this->errorMessages[$field][] = __('This field must be a valid url.');
                 }
                 break;
             case 'boolean':
@@ -192,7 +204,7 @@ class ApplicationSettingService
         }
     }
 
-    private function uploadImages($uploadAbleImages, &$updateAbleSettings)
+    private function uploadImages($uploadAbleImages, &$updateAbleSettings, &$imageUploadCount)
     {
         $fileUploadService = app(FileUploadService::class);
         foreach ($uploadAbleImages as $field => $file) {
@@ -206,12 +218,13 @@ class ApplicationSettingService
                 unset($updateAbleSettings[$uploadedFileName]);
                 continue;
             }
-
+            $imageUploadCount++;
             $updateAbleSettings[$field] = $uploadedFileName;
+            session()->flash('image_updated', true);
         }
     }
 
-    public function loadForm($settingGroup = null, $subSettingGroup = null, $viewOnly = false)
+    public function loadForm($settingGroup = null, $subSettingGroup = null)
     {
         $this->type = $settingGroup;
         $this->subType = $subSettingGroup;
@@ -242,6 +255,13 @@ class ApplicationSettingService
             $this->fieldValues[$key] = $fieldValue;
             $value_data = old($key, (settings($key) === false || settings($key) === null) ? (isset($value['default']) ? $value['default'] : null) : settings($key));
 
+            if ($value_data && isset($value['encryption']) && $value['encryption']) {
+                try {
+                    $value_data = decrypt($value_data);
+                } catch (Exception $exception) {
+                }
+            }
+
             if (session()->has('errors')) {
                 $errors = session()->get('errors');
                 $this->errorMessages = $errors->getBag('default')->messages();
@@ -254,11 +274,8 @@ class ApplicationSettingService
             $output .= __($value['field_label']);
             $output .= isset($value['slug_end_tag']) ? $value['slug_end_tag'] : (isset($common_wrapper['slug_end_tag']) ? $common_wrapper['slug_end_tag'] : '');
             $output .= isset($value['value_start_tag']) ? $value['value_start_tag'] : (isset($common_wrapper['value_start_tag']) ? $common_wrapper['value_start_tag'] : '');
-            if ($viewOnly) {
-                $output .= $this->_viewOutput($key, $value['field_type'], $fieldValue, $value_data);
-            } else {
-                $output .= $this->{'_' . $value['field_type']}($key, $fieldValue, $input_class, $value_data, $place_holder, $input_start_tag, $input_end_tag);
-            }
+
+            $output .= $this->{'_' . $value['field_type']}($key, $fieldValue, $input_class, $value_data, $place_holder, $input_start_tag, $input_end_tag);
             $output .= isset($value['value_end_tag']) ? $value['value_end_tag'] : (isset($common_wrapper['value_end_tag']) ? $common_wrapper['value_end_tag'] : '');
             $output .= isset($value['section_end_tag']) ? $value['section_end_tag'] : (isset($common_wrapper['section_end_tag']) ? $common_wrapper['section_end_tag'] : '');
         }
@@ -271,31 +288,6 @@ class ApplicationSettingService
             ];
         }
         return ['html' => new HtmlString($output), 'settingSections' => $settingSections];
-    }
-
-    private function _viewOutput($key, $fieldType, $fieldValue, $value_data)
-    {
-        if (in_array($fieldType, ['checkbox'])) {
-            if (is_json($value_data)) {
-                $value_data = json_decode($value_data, true);
-                $output = implode(', ', array_intersect_key($fieldValue, array_flip($value_data)));
-                return !empty($output) ? $output : $value_data;
-            } elseif (is_array($value_data)) {
-                return implode(', ', array_intersect_key($fieldValue, array_flip($value_data)));
-            } elseif (!empty($fieldValue)) {
-                return isset($fieldValue[$value_data]) ? $fieldValue[$value_data] : $value_data;
-            } else {
-                return $value_data;
-            }
-        } elseif ($fieldType == 'switch') {
-            return isset($fieldValue[$value_data]) && $fieldValue[$value_data] ? __('Enabled') : __('Disabled');
-        } elseif ($fieldType == 'image') {
-            return '<img width="80" src="' . get_image($value_data) . '" />';
-        } elseif (!empty($fieldValue)) {
-            return isset($fieldValue[$value_data]) ? $fieldValue[$value_data] : $value_data;
-        } else {
-            return $value_data;
-        }
     }
 
     private function _text($key, $data_array, $input_class, $value_data, $place_holder, $input_start_tag, $input_end_tag)

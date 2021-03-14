@@ -28,9 +28,19 @@ class NewPasswordRequest extends FormRequest
             'password_confirmation' => 'required',
         ];
 
-        if( env('APP_ENV') != 'local' && settings('display_google_captcha') == ACTIVE )
+        if(
+            env('APP_ENV') != 'local' &&
+            settings('display_google_captcha') == ACTIVE &&
+            !$this->is('api/*')
+        )
         {
             $validation['g-recaptcha-response'] = 'required|captcha';
+        }
+
+        if( $this->is('api/*') ) {
+            $validation['verification_code'] = 'required|numeric|between:100000,999999';
+            $validation['email'] = 'required|email|exists:users,email|between:5,255';
+            $validation['verifier_hash_code'] = 'required';
         }
 
         return $validation;

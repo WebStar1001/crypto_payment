@@ -36,14 +36,14 @@
                             <input type="text"
                                    class="form-control lf-filter-from-date datepicker"
                                    name="{{$pageName}}-frm"
-                                   placeholder="From date"
+                                   placeholder="{{__('From date')}}"
                                    value="{{return_get($pageName.'-frm')}}">
                         </div>
                         <div class="ml-1 lf-flex-1">
                             <input type="text"
                                    class="form-control lf-filter-to-date datepicker"
                                    name="{{$pageName}}-to"
-                                   placeholder="To date"
+                                   placeholder="{{__('To date')}}"
                                    value="{{return_get($pageName.'-to')}}">
                         </div>
                         <button type="submit"
@@ -87,7 +87,7 @@
                             <input type="text"
                                    class="form-control lf-filter-search mr-0"
                                    name="{{$pageName}}-srch"
-                                   placeholder="search"
+                                   placeholder="{{__('search')}}"
                                    value="{{return_get($pageName.'-srch')}}">
                         </div>
                         <button type="submit"

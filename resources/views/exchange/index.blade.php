@@ -63,6 +63,9 @@
     <script src="{{asset('plugins/charting_library/datafeed/datafeed.js')}}"></script>
     <script src="{{asset('plugins/cvalidator/cvalidator-language-en.js')}}"></script>
     <script src="{{asset('plugins/cvalidator/cvalidator.js')}}"></script>
+    <script>
+        $.fn.dataTable.ext.errMode = 'none';
+    </script>
     @include('exchange._vueInit')
     <script src="{{asset('js/chart.js')}}"></script>
     @include('exchange._market_table_script')

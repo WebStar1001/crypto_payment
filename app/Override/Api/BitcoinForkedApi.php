@@ -138,7 +138,7 @@ class BitcoinForkedApi
     public function getTransaction(string $txnId): array
     {
         try {
-            $response = $this->call("gettransaction", ["txid" => $txnId]);
+            $response = $this->call("gettransaction", [$txnId]);
             $response->throw();
             if ($response->successful()) {
                 return [
@@ -150,5 +150,34 @@ class BitcoinForkedApi
             Logger::error($exception, "[FAILED][BitcoinForkedApi][getTransaction]");
         }
         return ['error' => 'No transactions found.'];
+    }
+
+    public function getStatus()
+    {
+        try {
+            $response = $this->call("getnetworkinfo");
+            $response->throw();
+            if ($response->successful()) {
+                $result = [
+                    'status' => is_null($response['error']),
+                    'version' => $response['result']['version']
+                ];
+            }
+
+            $response = $this->call("getblockchaininfo");
+            $response->throw();
+            if ($response->successful() && isset($response['result']['chain'])) {
+                $result['network'] = ucfirst($response['result']['chain']);
+            }
+            return $result;
+
+        } catch (Exception $exception) {
+            Logger::error($exception, "[FAILED][BitcoinForkedApi][getStatus]");
+        }
+        return [
+            'status' => false,
+            'version' => '',
+            'network' => '',
+        ];
     }
 }

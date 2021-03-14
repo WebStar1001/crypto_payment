@@ -3,42 +3,32 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-
-                <h2 class="mb-4">Public API</h2>
-
+            <div class="col-md-12 my-4">
+                <h2>Public API</h2>
                 <p>Trademen provides HTTP APIs for interacting with the exchange only for public market data.</p>
-
                 <ul class="list-group mb-3 pl-0">
-                    <li class="list-group-item lf-toggle-bg-card">
-                        <a href="#returnTicker" class="text-info">- returnTicker</a>
-                    </li>
-                    <li class="list-group-item lf-toggle-bg-card">
-                        <a href="#returnOrderBook" class="text-info">- returnOrderBook</a>
-                    </li>
-                    <li class="list-group-item lf-toggle-bg-card">
-                        <a href="#returnTradeHistory" class="text-info">- returnTradeHistory</a>
-                    </li>
-                    <li class="list-group-item lf-toggle-bg-card">
-                        <a href="#returnChartData" class="text-info">- returnChartData</a>
-                    </li>
+                    <li class="list-group-item lf-toggle-bg-card"><a class="text-info" href="/public-api#returnTicker">-
+                            returnTicker</a></li>
+                    <li class="list-group-item lf-toggle-bg-card"><a class="text-info"
+                                                                     href="/public-api#returnOrderBook">-
+                            returnOrderBook</a></li>
+                    <li class="list-group-item lf-toggle-bg-card"><a class="text-info"
+                                                                     href="/public-api#returnTradeHistory">-
+                            returnTradeHistory</a></li>
+                    <li class="list-group-item lf-toggle-bg-card"><a class="text-info"
+                                                                     href="/public-api#returnChartData">-
+                            returnChartData</a></li>
                 </ul>
-
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
                 <p>The HTTP API allows read access to public market data through the public endpoint -</p>
-                <p>Public HTTP Endpoint: <a class="text-info" href="javascript:">https://yourdomain.com/api/public</a>
-                </p>
-
-                <hr>
-                <!-- return ticker-->
+                <p>Public HTTP Endpoint:<a class="text-info">https://yourdomain.com/api/public</a></p>
                 <div id="returnTicker">
+                    <h4 class="py-3">&nbsp;</h4>
                     <h4 class="py-3">returnTicker</h4>
                     <p>Retrieves summary information for each currency/coin pair listed on the exchange.</p>
-                    <p>
-                        Ticker Endpoint:
-                        <a class="text-info"
-                           href="javascript:">https://yourdomain.com/api/public?command=returnTicker</a>
+                    <p>Ticker Endpoint:<a class="text-info">https://yourdomain.com/api/public?command=returnTicker</a>
                     </p>
-
                     <table
                         class="table table-borderless table-striped lf-toggle-bg-card lf-toggle-border-card lf-toggle-border-color">
                         <tbody>
@@ -72,13 +62,14 @@
                         </tr>
                         </tbody>
                     </table>
-
+                    <h5>&nbsp;</h5>
+                    <h5>&nbsp;</h5>
+                    <h5>&nbsp;</h5>
+                    <h5>&nbsp;</h5>
                     <h5>Example:</h5>
-
                     <div class="card my-2 mb-3 lf-toggle-bg-card">
                         <div class="card-body">
-<pre class="text-green">
-    {
+<pre class="text-green">    {
         "BTC_USD": {
             "last": "8180.000000000",
             "low24hr": "8183.00000000",
@@ -99,9 +90,10 @@
 </pre>
                         </div>
                     </div>
-
-                    <p>Retrieving summary information for a specified currency/coin pair listed on the exchange - </p>
-
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>Retrieving summary information for a specified currency/coin pair listed on the exchange -</p>
+                    <p>&nbsp;</p>
                     <table
                         class="table table-borderless table-striped lf-toggle-bg-card lf-toggle-border-card lf-toggle-border-color">
                         <tbody>
@@ -115,20 +107,17 @@
                         </tr>
                         </tbody>
                     </table>
-
-                    <p>
-                        Ticker Endpoint:
-                        <a class="text-info" href="javascript:">
-                            https://yourdomain.com/api/public?command=returnTicker&tradePair=BTC_USD
-                        </a>
+                    <p>&nbsp;</p>
+                    <p>Ticker Endpoint:<a class="text-info">https://yourdomain.com/api/public?command=returnTicker&amp;tradePair=BTC_USD</a>
                     </p>
-
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <h5>&nbsp;</h5>
+                    <h5>&nbsp;</h5>
                     <h5>Example:</h5>
-
                     <div class="card my-2 mb-3 lf-toggle-bg-card">
                         <div class="card-body">
-<pre class="text-green">
-    {
+<pre class="text-green">    {
         "last": "8180.000000000",
         "low24hr": "8183.00000000",
         "high24hr": "10369.00000000",
@@ -139,62 +128,52 @@
 </pre>
                         </div>
                     </div>
-
-                <hr>
-                <!-- return order book-->
-                <div id="returnOrderBook">
-                    <h4 class="py-3">returnOrderBook</h4>
-                    <p>Retrieves the latest 50 order book of each order type information for a specified currency/coin pair listed on the
-                        exchange</p>
-                    <p>
-                        Order book Endpoint: <a class="text-info" href="javascript:">https://yourdomain.com/public?command=returnOrderBook&tradePair=BTC_USD</a>
-                    </p>
-
-                    <h5>Input Fields:</h5>
-
-                    <table
-                        class="table table-borderless table-striped lf-toggle-bg-card lf-toggle-border-card lf-toggle-border-color">
-                        <thead>
-                        <tr>
-                            <th class="w-25">Request Parameter</th>
-                            <th>Description</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>tradePair</td>
-                            <td>A pair like BTC_ETH</td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <h5>Out Fields:</h5>
-
-                    <table
-                        class="table table-borderless table-striped lf-toggle-bg-card lf-toggle-border-card lf-toggle-border-color">
-                        <tbody>
-                        <tr>
-                            <td class="w-25"><strong>Field</strong></td>
-                            <td class="strong"><strong>Description</strong></td>
-                        </tr>
-
-                        <tr>
-                            <td>asks</td>
-                            <td>An array of price aggregated offers in the book ordered from low to high price.</td>
-                        </tr>
-                        <tr>
-                            <td>bids</td>
-                            <td>An array of price aggregated bids in the book ordered from high to low price.</td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <h5>Example:</h5>
-
-                    <div class="card my-2 mb-3 lf-toggle-bg-card">
-                        <div class="card-body">
-<pre class="text-green">
-    {
+                    <div id="returnOrderBook">
+                        <h4 class="py-3">&nbsp;</h4>
+                        <h4 class="py-3">returnOrderBook</h4>
+                        <p>Retrieves the latest 50 order book of each order type information for a specified
+                            currency/coin pair listed on the exchange</p>
+                        <p>Order book Endpoint:<a
+                                href="https://yourdomain.com/public?command=returnOrderBook&amp;tradePair=BTC_USD">https://yourdomain.com/public?command=returnOrderBook&amp;tradePair=BTC_USD</a>
+                        </p>
+                        <p>&nbsp;</p>
+                        <h5>&nbsp;</h5>
+                        <h5>Input Fields:</h5>
+                        <table
+                            class="table table-borderless table-striped lf-toggle-bg-card lf-toggle-border-card lf-toggle-border-color">
+                            <tbody>
+                            <tr>
+                                <td>tradePair</td>
+                                <td>A pair like BTC_ETH</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <h5>&nbsp;</h5>
+                        <h5>&nbsp;</h5>
+                        <h5>Out Fields:</h5>
+                        <table
+                            class="table table-borderless table-striped lf-toggle-bg-card lf-toggle-border-card lf-toggle-border-color">
+                            <tbody>
+                            <tr>
+                                <td class="w-25"><strong>Field</strong></td>
+                                <td class="strong"><strong>Description</strong></td>
+                            </tr>
+                            <tr>
+                                <td>asks</td>
+                                <td>An array of price aggregated offers in the book ordered from low to high price.</td>
+                            </tr>
+                            <tr>
+                                <td>bids</td>
+                                <td>An array of price aggregated bids in the book ordered from high to low price.</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <h5>&nbsp;</h5>
+                        <h5>&nbsp;</h5>
+                        <h5>Example:</h5>
+                        <div class="card my-2 mb-3 lf-toggle-bg-card">
+                            <div class="card-body">
+<pre class="text-green">    {
       "asks": [
         {
           "price": "0.09000000",
@@ -223,36 +202,23 @@
       ]
     }
 </pre>
-
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
-                <hr>
-                <!-- return trade history-->
                 <div id="returnTradeHistory">
+                    <h4 class="py-3">&nbsp;</h4>
                     <h4 class="py-3">returnTradeHistory</h4>
-                    <p>
-                        Returns the past 100 trades for a given market,
-                        You may set a range specified in UNIX timestamps by the “start” and “end” GET parameters.
+                    <p>Returns the past 100 trades for a given market, You may set a range specified in UNIX timestamps
+                        by the &ldquo;start&rdquo; and &ldquo;end&rdquo; GET parameters.</p>
+                    <p>Trade History Endpoint:<a class="text-info">https://yourdomain.com/public?command=returnTradeHistory&amp;tradePair=BTC_USD</a>
                     </p>
-                    <p>
-                        Trade History Endpoint: <a class="text-info" href="javascript:">
-                            https://yourdomain.com/public?command=returnTradeHistory&tradePair=BTC_USD
-                        </a>
+                    <p>Trade History Endpoint:<a class="text-info">https://yourdomain.com/public?command=returnTradeHistory&amp;tradePair=BTC_USD&amp;start=1593419220&amp;end=1593423660</a>
                     </p>
-
-                    <p>
-                        Trade History Endpoint: <a class="text-info" href="javascript:">
-                            https://yourdomain.com/public?command=returnTradeHistory&tradePair=BTC_USD&start=1593419220&end=1593423660
-                        </a>
-                    </p>
-
+                    <h5>&nbsp;</h5>
+                    <h5>&nbsp;</h5>
+                    <h5>&nbsp;</h5>
                     <h5>Input Fields:</h5>
-
                     <table
                         class="table table-borderless table-striped lf-toggle-bg-card lf-toggle-border-card lf-toggle-border-color">
                         <tbody>
@@ -274,9 +240,10 @@
                         </tr>
                         </tbody>
                     </table>
-
+                    <h5>&nbsp;</h5>
+                    <h5>&nbsp;</h5>
+                    <h5>&nbsp;</h5>
                     <h5>Out Fields:</h5>
-
                     <table
                         class="table table-borderless table-striped lf-toggle-bg-card lf-toggle-border-card lf-toggle-border-color">
                         <tbody>
@@ -284,7 +251,6 @@
                             <td class="w-25"><strong>Field</strong></td>
                             <td class="strong"><strong>Description</strong></td>
                         </tr>
-
                         <tr>
                             <td>date</td>
                             <td>The UTC date and time of the trade execution.</td>
@@ -307,13 +273,13 @@
                         </tr>
                         </tbody>
                     </table>
-
+                    <h5>&nbsp;</h5>
+                    <h5>&nbsp;</h5>
+                    <h5>&nbsp;</h5>
                     <h5>Example:</h5>
-
                     <div class="card my-2 mb-3 lf-toggle-bg-card">
                         <div class="card-body">
-<pre class="text-green">
-    [
+<pre class="text-green">    [
       {
         "price": "9860.86031280",
         "amount": "0.85441089",
@@ -334,30 +300,17 @@
                         </div>
                     </div>
                 </div>
-
-                <hr>
-                <!-- return chart data-->
                 <div id="returnChartData">
+                    <h4 class="py-3">&nbsp;</h4>
                     <h4 class="py-3">returnChartData</h4>
-                    <p class="has-line-data" data-line-start="91" data-line-end="92">
-                        Returns candlestick chart data. Required GET parameters
-                        are <code>tradePair</code>, (candlestick period in seconds; valid values
-                        are <code>300</code>,
-                        <code>900</code>, <code>1800</code>, <code>7200</code>, <code>14400</code>, and
-                        <code>86400</code>),
-                        <code>start</code>, and <code>end</code>. <code>Start</code> and <code>end</code> are given in
-                        UNIX timestamp format
-                        and used to specify the date range for the data returned. Fields include:
+                    <p>Returns candlestick chart data. Required GET parameters are tradePair, (candlestick period in
+                        seconds; valid values are 300, 900, 1800, 7200, 14400, and 86400), start, and end. Start and end
+                        are given in UNIX timestamp format and used to specify the date range for the data returned.
+                        Fields include:</p>
+                    <p>Chart Data Endpoint:<a class="text-info">https://yourdomain.com/public?command=returnChartData&amp;tradePair=BTC_USD&amp;interval=900&amp;start=1546300800&amp;end=1546646400</a>
                     </p>
-
-                    <p>
-                        Chart Data Endpoint: <a class="text-info" href="javascript:">
-                            https://yourdomain.com/public?command=returnChartData&tradePair=BTC_USD&interval=900&start=1546300800&end=1546646400
-                        </a>
-                    </p>
-
+                    <h5>&nbsp;</h5>
                     <h5>Input Fields:</h5>
-
                     <table
                         class="table table-borderless table-striped lf-toggle-bg-card lf-toggle-border-card lf-toggle-border-color">
                         <tbody>
@@ -365,15 +318,14 @@
                             <td class="w-25"><strong>Request Parameter</strong></td>
                             <td class="strong"><strong>Description</strong></td>
                         </tr>
-
                         <tr>
                             <td>tradePair</td>
                             <td>The currency pair of the market being requested.</td>
                         </tr>
                         <tr>
                             <td>interval</td>
-                            <td>Candlestick period/interval in seconds. Valid values are 300, 900, 1800, 7200, 14400, and
-                                86400.
+                            <td>Candlestick period/interval in seconds. Valid values are 300, 900, 1800, 7200, 14400,
+                                and 86400.
                             </td>
                         </tr>
                         <tr>
@@ -386,9 +338,10 @@
                         </tr>
                         </tbody>
                     </table>
-
+                    <h5>&nbsp;</h5>
+                    <h5>&nbsp;</h5>
+                    <h5>&nbsp;</h5>
                     <h5>Out Fields:</h5>
-
                     <table
                         class="table table-borderless table-striped lf-toggle-bg-card lf-toggle-border-card lf-toggle-border-color">
                         <tbody>
@@ -422,13 +375,13 @@
                         </tr>
                         </tbody>
                     </table>
-
+                    <h5>&nbsp;</h5>
+                    <h5>&nbsp;</h5>
+                    <h5>&nbsp;</h5>
                     <h5>Example:</h5>
-
                     <div class="card my-2 mb-3 lf-toggle-bg-card">
                         <div class="card-body">
-<pre class="text-green">
-    [
+<pre class="text-green">    [
       {
         "date": 1593396900,
         "low": "10112.27439575",
@@ -451,7 +404,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

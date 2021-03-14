@@ -132,7 +132,7 @@
 .btn-danger {
     &:hover, &:focus {
         color: _variables.$white-color !important;;
-        background-color: _variables.darker(_variables.$danger-color, 30%);
+        background-color: _variables.darker(_variables.$primary-color, 30%);
     }
 }
 

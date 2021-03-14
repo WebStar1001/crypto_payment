@@ -28,7 +28,11 @@ class AdminCoinApiOptionController extends Controller
             $api['selected_banks'] = $request->get('banks', []);
         }
 
-        if ($coin->update(['api' => $api])) {
+        if (in_array($coin->type, [COIN_TYPE_CRYPTO, COIN_TYPE_ERC20]) && $api['selected_apis'] === API_ETHEREUM) {
+            $coin->generateSystemAddress();
+        }
+
+        if ($coin->update(['api' => $api, 'property_id' => $request->get('property_id')])) {
             return redirect()->back()->with(RESPONSE_TYPE_SUCCESS, __('The coin API has been updated successfully.'));
         }
         return redirect()->back()->withInput()->with(RESPONSE_TYPE_ERROR, __('Failed to update coin API.'));

@@ -65,12 +65,8 @@ return [
     'image_extensions' => ['png', 'jpg', 'jpeg', 'gif'],
 
     'strip_tags' => [
-        'escape_text' => ['beginning_text', 'ending_text', 'company_name'],
-        'escape_full_text' => ['editor_content'],
-        'allowed_tag_for_escape_text' => '<p><br><b><i><u><strong><ul><ol><li>',
-        'allowed_tag_for_escape_full_text' => '<h1><h2><h3><h4><h5><h6><hr><article><section><video><audio><table><tbody><tr><td><thead><tfoot><footer><header><p><br><b><i><u><strong><ul><ol><dl><dt><li><div><sub><sup><span><a><pre>',
+        'escape_text' => ['editor_content', 'body'],
     ],
-
     'available_commands' => [
         'cache' => 'cache:clear',
         'config' => 'config:clear',

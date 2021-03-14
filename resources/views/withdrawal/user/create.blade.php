@@ -23,7 +23,7 @@
                     <div class="card-body">
                         @if($wallet->coin->withdrawal_status == ACTIVE)
                             {!! Form::open(['route'=>['user.wallets.withdrawals.store', $wallet->symbol], 'method' => 'post', 'class'=>'form-horizontal validator dark-text-color', 'id' => 'withdrawalForm']) !!}
-                            @if($wallet->coin->type === COIN_TYPE_CRYPTO)
+                            @if(in_array($wallet->coin->type, [COIN_TYPE_CRYPTO, COIN_TYPE_ERC20]))
                                 @include('withdrawal.user._crypto_form')
                             @else
                                 @include('withdrawal.user._fiat_from')
@@ -46,7 +46,8 @@
                                         {{ Form::checkbox('withdrawal_policy', 1, false, ['id' => 'policy']) }}
                                         <label for="policy">{{ __("Accept withdrawal's policy.") }}</label>
                                     </div>
-                                    <a class="ml-2 text-info" href=""><small>{{ __("Withdrawal's policy page") }}</small></a>
+                                    <a class="ml-2 text-info"
+                                       href="{{ settings('withdrawal_policy_page_url') }}"><small>{{ __("Withdrawal's policy page") }}</small></a>
                                 </div>
                                 <span class="invalid-feedback" data-name="withdrawal_policy">{{ $errors->first('withdrawal_policy') }}</span>
                             </div>

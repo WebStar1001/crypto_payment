@@ -12,6 +12,7 @@ use App\Models\Wallet\Wallet;
 use App\Services\Logger\Logger;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 
 trait ProcessOrder
@@ -181,8 +182,8 @@ trait ProcessOrder
         if (bccomp($referralEarning, '0') > 0) {
             //Push the order user's referrer's referral earning to the referrer's wallet
             $this->makeWalletsAttributes(
-                $this->order->user->referrer_id,
-                $this->getIncomingCoinSymbol($this->order),
+                $order->user->referrer_id,
+                $this->getIncomingCoinSymbol($order),
                 $referralEarning
             );
         }
@@ -202,6 +203,7 @@ trait ProcessOrder
             if (bccomp($referralEarning, '0') > 0) {
                 //Push referral earning attributes to referral earning history
                 $this->referralEarningsAttributes->push([
+                    'id' => Str::uuid(),
                     'referrer_user_id' => $referrerUserId,
                     'referral_user_id' => $referralUserId,
                     'symbol' => $symbol,

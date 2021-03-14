@@ -8,6 +8,7 @@ use App\Models\Core\Notification;
 use App\Models\Core\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 class VerificationService
@@ -63,16 +64,28 @@ class VerificationService
         }
 
         // send email address.
-        $this->_sendEmailVerificationLink($user);
+        $verificationCode = $request->is('api/*') ? mt_rand(100000, 999999) : null;
+        $this->_sendEmailVerificationLink($user, $request->is('api/*'), $verificationCode);
 
-        return [
+        $response = [
             RESPONSE_STATUS_KEY => true,
-            RESPONSE_MESSAGE_KEY => __('Email verification link is sent successfully.')
+            RESPONSE_MESSAGE_KEY => __('Email verification link is sent successfully.'),
         ];
+
+        if( $request->is('api/*') ) {
+            $response[RESPONSE_DATA] = [
+                'verifier_hash_code' => Hash::make($verificationCode),
+                'email' => $user->email
+            ];
+        }
+
+        return $response;
     }
 
-    public function _sendEmailVerificationLink($user)
+    public function _sendEmailVerificationLink($user, $isApi=false, $verificationCode=null)
     {
-        return Mail::to($user->email)->send(new Registered($user->profile));
+
+        return Mail::to($user->email)
+            ->send(new Registered($user->profile, $isApi, $verificationCode));
     }
 }

@@ -16,6 +16,7 @@
                                 <th class="min-phone-l text-center">{{ __('Icon') }}</th>
                                 <th class="min-phone-l text-center">{{ __('Default') }}</th>
                                 <th class="min-phone-l text-center">{{ __('Status') }}</th>
+                                <th class="min-phone-l text-center">{{ __('Direction') }}</th>
                                 <th class="all no-sort text-right">{{ __('Action') }}</th>
                             </tr>
                         @endslot
@@ -40,6 +41,7 @@
                                     @endif
                                 </td>
                                 <td class="text-center">{{ active_status($language->is_active) }}</td>
+                                <td class="text-center text-uppercase">{{ $language->direction }}</td>
                                 <td class="lf-action text-right">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-info dropdown-toggle"

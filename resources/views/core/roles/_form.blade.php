@@ -44,7 +44,7 @@ $ModuleClasses = [];
                                                             {{ Form::checkbox("roles[$name][$groupName][]",$permissionName, isset($role->permissions[$name][$groupName]) ? (in_array($permissionName, $role->permissions[$name][$groupName]) ? true :false) : false ,["class"=>"route-item flat-blue module_action_$name task_action_$groupName", "id"=>"list-$name-$groupName-$permissionName"]) }}
                                                         @endif
                                                         <label class="{{$checkBox==1 ? 'active' : ($checkBox==2 ?'inactive' : '')}}"
-                                                               for="list-{{$name}}-{{$groupName}}-{{ $permissionName }}">{{ Str::title(str_replace('_',' ',$permissionName)) }}</label>
+                                                               for="list-{{$name}}-{{$groupName}}-{{ $permissionName }}">{{ __(Str::title(str_replace('_',' ',$permissionName))) }}</label>
                                                     </div>
                                                 </div>
                                                 <?php
@@ -62,7 +62,7 @@ $ModuleClasses = [];
                                                 {{ Form::checkbox("task",1,$allItems,["class"=>"sub-module flat-blue task module_action_$name module_action_{$name}_{$groupName}","id"=>"task-$name-$groupName", "data-id"=>"$groupName"]) }}
                                             @endif
                                             <label class="{{$checkBox==1 ? 'active' : ($checkBox==2 ?'inactive' : '')}}"
-                                                   for="task-{{$name}}-{{$groupName}}">{{ Str::title(str_replace('_',' ',$groupName)) }}</label>
+                                                   for="task-{{$name}}-{{$groupName}}">{{ __(Str::title(str_replace('_',' ',$groupName))) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -76,7 +76,7 @@ $ModuleClasses = [];
                                 {{ Form::checkbox("module",1,$allSubModules,["class"=>"flat-blue module module_$name","id"=>"role-$name", "data-id"=>"$name"]) }}
                             @endif
                             <label class="{{$checkBox==1 ? 'active' : ($checkBox==2 ?'inactive' : '')}}"
-                                   for="role-{{$name}}">{{ Str::title(str_replace('_',' ',$name)) }}</label>
+                                   for="role-{{$name}}">{{ __(Str::title(str_replace('_',' ',$name))) }}</label>
                         </div>
                     </div>
                 </div>

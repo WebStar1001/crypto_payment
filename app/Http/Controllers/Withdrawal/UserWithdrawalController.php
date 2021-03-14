@@ -17,6 +17,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use ReflectionClass;
 
 class UserWithdrawalController extends Controller
 {
@@ -74,6 +75,13 @@ class UserWithdrawalController extends Controller
 
     public function store(WithdrawalRequest $request, Wallet $wallet)
     {
+        if ($wallet->coin->withdrawal_status == INACTIVE) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with(RESPONSE_TYPE_ERROR, __("The withdrawal service is currently disabled. Please try sometime later."));
+        }
+
         if (bccomp($request->get('amount'), $wallet->primary_balance) > 0) {
             return redirect()
                 ->back()
@@ -84,20 +92,20 @@ class UserWithdrawalController extends Controller
                 );
         }
 
-        $api = $wallet->coin->getAssociatedApi();
+        $api = $wallet->coin->getAssociatedApi($request->get('api'));
 
         if (is_null($api)) {
             return redirect()
                 ->back()
                 ->withInput()
-                ->with(RESPONSE_TYPE_ERROR, __("Unable to withdraw amount."));
+                ->with(RESPONSE_TYPE_ERROR, __("Payment service is currently not available. Please try sometime later."));
         }
 
-        if ($wallet->coin->type === COIN_TYPE_CRYPTO && !$api->validateAddress($request->get('address'))) {
+        if ($request->has('address') && !$api->validateAddress($request->get('address'))) {
             return redirect()
                 ->back()
                 ->withInput()
-                ->with(RESPONSE_TYPE_ERROR, __("Invalid address given."));
+                ->with(RESPONSE_TYPE_ERROR, __("Invalid given address."));
         }
 
         $params = [
@@ -111,13 +119,12 @@ class UserWithdrawalController extends Controller
                 $wallet->coin->withdrawal_fee,
                 $wallet->coin->withdrawal_fee_type
             ),
-            'api' => $wallet->coin->api['selected_apis'],
+            'api' => (new ReflectionClass($api))->getShortName(),
             'status' => STATUS_PENDING,
         ];
 
         if ($request->has('api') && $request->get('api') === API_BANK) {
             $params['bank_account_id'] = $request->get('bank_account_id');
-            $params['api'] = $request->get('api');
             $params['status'] = STATUS_REVIEWING;
         }
 
@@ -182,7 +189,7 @@ class UserWithdrawalController extends Controller
         }
 
         $message = __("Withdrawal has been confirmed successfully. It will be processed shortly.");
-        if (settings('is_admin_approval_required')) {
+        if (settings('is_admin_approval_required') || $withdrawal->api === API_BANK) {
             $withdrawal->update(['status' => STATUS_REVIEWING]);
             $message = __("Withdrawal has been confirmed successfully. It will require admin approval for further process.");
         } else {
@@ -200,8 +207,14 @@ class UserWithdrawalController extends Controller
 
     public function destroy(Wallet $wallet, WalletWithdrawal $withdrawal)
     {
+        if (!in_array($withdrawal->status, [STATUS_REVIEWING, STATUS_PENDING, STATUS_EMAIL_SENT])) {
+            return redirect()
+                ->route('user.wallets.withdrawals.show', [$withdrawal->symbol, $withdrawal->id])
+                ->with(RESPONSE_TYPE_SUCCESS, __("The withdrawal cannot be canceled."));
+        }
+
         if ($withdrawal->update(['status' => STATUS_CANCELING])) {
-            WithdrawalCancelJob::dispatch($withdrawal);
+            WithdrawalCancelJob::dispatch($withdrawal->refresh());
             return redirect()
                 ->route('user.wallets.withdrawals.index', $withdrawal->symbol)
                 ->with(RESPONSE_TYPE_SUCCESS, __("The withdrawal cancellation will be processed shortly."));

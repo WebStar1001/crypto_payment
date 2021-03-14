@@ -4,6 +4,8 @@ namespace App\Services\Core;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class LanguageService
 {
@@ -73,6 +75,40 @@ class LanguageService
         $translations = $this->getTranslations();
 
         $keysFromFiles = Arr::collapse($this->getTranslationsFromFiles());
+
+        foreach (config('navigation.registered_place') as $place){
+            $keysFromFiles = array_merge($keysFromFiles,array_column(Cache::get("navigation:{$place}"),'name'));
+        }
+        foreach(config('appsettings.settings') as $settingTitle=>$settingData){
+            $keysFromFiles[] = ucwords(preg_replace('/[-_]+/', ' ', $settingTitle));
+            foreach($settingData['settings'] as $settingSubTitle=>$settingMainData){
+                $keysFromFiles[] = ucwords(preg_replace('/[-_]+/', ' ', $settingSubTitle));
+                $keysFromFiles = array_merge($keysFromFiles,array_column($settingMainData,'field_label'));
+            }
+        }
+        for($i = 1; $i <= 3; $i++){
+            if(!empty(settings('footer_menu_title_'.$i))){
+                $keysFromFiles[] = settings('footer_menu_title_'.$i);
+            }
+        }
+        foreach(config('webpermissions.configurable_routes') as $appSettingTitle=>$appSettingData){
+            $keysFromFiles[] = Str::title(str_replace('_',' ',$appSettingTitle));
+            foreach($appSettingData as $appSettingSubTitle=>$appSettingSubData){
+                $keysFromFiles[] = Str::title(str_replace('_',' ',$appSettingSubTitle));
+                foreach($appSettingSubData as $appSettingGroupTitle=>$appSettingGroupData){
+                    $keysFromFiles[] = Str::title(str_replace('_',' ',$appSettingGroupTitle));
+                }
+            }
+        }
+        foreach(config('apipermissions.configurable_routes') as $appSettingTitle=>$appSettingData){
+            $keysFromFiles[] = Str::title(str_replace('_',' ',$appSettingTitle));
+            foreach($appSettingData as $appSettingSubTitle=>$appSettingSubData){
+                $keysFromFiles[] = Str::title(str_replace('_',' ',$appSettingSubTitle));
+                foreach($appSettingSubData as $appSettingGroupTitle=>$appSettingGroupData){
+                    $keysFromFiles[] = Str::title(str_replace('_',' ',$appSettingGroupTitle));
+                }
+            }
+        }
 
         foreach (array_unique($keysFromFiles) as $fileName => $key) {
             foreach ($translations as $lang => $keys) {

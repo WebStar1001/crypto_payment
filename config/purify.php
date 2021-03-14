@@ -54,7 +54,7 @@ return [
         |
         */
 
-        'HTML.Doctype' => 'XHTML 1.0 Strict',
+        'HTML.Doctype' => 'HTML 4.01 Transitional',
 
         /*
         |--------------------------------------------------------------------------
@@ -66,8 +66,7 @@ return [
         | http://htmlpurifier.org/live/configdoc/plain.html#HTML.Allowed
         |
         */
-
-        'HTML.Allowed' => 'h1[id|class|style],h2[id|class|style],h3[class|id|style],h4[class|id|style],h5[class|id|style],h6[class|id|style],b[class|id|style],strong[class|id|style],i[class|id|style],em[class|id|style],a[class|id|style|href|title],ul[class|id|style],ol[class|id|style],li[class|id|style],p[style],br,span[class|id|style],div[class|id|style],img[width|height|alt|src],table[class|id|style|summary],thead[class|id|style],tbody[class|id|style],tfoot[class|id|style],tr[class|id|style],th[class|id|style|abbr],td[class|id|style|abbr],pre[class|id|style]',
+        'HTML.ForbiddenAttributes' => ['onabort', 'onafterprint', 'onbeforeprint', 'onbeforeunload', 'onblur', 'oncanplay', 'oncanplaythrough', 'onchange', 'onclick', 'oncontextmenu', 'oncopy', 'oncuechange', 'oncut', 'ondblclick', 'ondrag', 'ondragend', 'ondragenter', 'ondragleave', 'ondragover', 'ondragstart', 'ondrop', 'ondurationchange', 'onemptied', 'onended', 'onerror', 'onfocus', 'onhashchange', 'oninput', 'oninvalid', 'onkeydown', 'onkeypress', 'onkeyup', 'onload', 'onloadeddata', 'onloadedmetadata', 'onloadstart', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'onmousewheel', 'onoffline', 'ononline', 'onpagehide', 'onpageshow', 'onpaste', 'onpause', 'onplay', 'onplaying', 'onpopstate', 'onprogress', 'onratechange', 'onreset', 'onresize', 'onscroll', 'onsearch', 'onseeked', 'onseeking', 'onselect', 'onstalled', 'onstorage', 'onsubmit', 'onsuspend', 'ontimeupdate', 'ontoggle', 'onunload', 'onvolumechange', 'onwaiting', 'onwheel', 'lowsrc'],
 
         /*
         |--------------------------------------------------------------------------
@@ -85,7 +84,7 @@ return [
         |
         */
 
-        'HTML.ForbiddenElements' => '',
+        'HTML.ForbiddenElements' => 'script,style',
 
         /*
         |--------------------------------------------------------------------------
@@ -129,7 +128,113 @@ return [
         */
 
         'AutoFormat.RemoveEmpty' => false,
+
+        /*
+        |--------------------------------------------------------------------------
+        | HTML.Trusted
+        |--------------------------------------------------------------------------
+        |
+        | Indicates whether or not the user input is trusted or not. If the input is trusted,
+        | a more expansive set of allowed tags and attributes will be used.
+        |
+        | http://htmlpurifier.org/live/configdoc/plain.html#HTML.Trusted
+        |
+        */
+
+        'HTML.Trusted' => true,
+
+        /*
+        |--------------------------------------------------------------------------
+        | HTML.SafeIframe
+        |--------------------------------------------------------------------------
+        |
+        | Whether or not to permit iframe tags in untrusted documents.
+        | This directive must be accompanied by a whitelist of permitted iframes
+        |
+        | http://htmlpurifier.org/live/configdoc/plain.html#HTML.SafeIframe
+        |
+        */
+
+        'HTML.SafeIframe' => true,
+        'URI.SafeIframeRegexp' => '%^(http://|https://|//)(www.youtube-nocookie.com/embed/)%',
+
         'Attr.EnableID' => true,
     ],
 
+    'custom_attributes' => [
+        'aria-label',
+        'aria-hidden',
+        'aria-disabled',
+        'aria-selected',
+        'aria-haspopup',
+        'aria-expanded',
+        'aria-labelledby',
+        'aria-current',
+        'data-individual',
+        'data-dismiss',
+        'data-action',
+        'data-toggle',
+        'data-placement',
+        'data-link',
+        'data-wrapper',
+        'data-pause',
+        'data-pause-active',
+        'data-process',
+        'data-elapsed',
+        'data-in',
+        'data-in-transition',
+        'data-out',
+        'data-out-transition',
+        'data-transition',
+        'data-transition-interval',
+        'data-animation',
+        'data-pf-groups',
+        'data-display-interval',
+        'data-current-interval',
+        'data-current-slide',
+        'data-element-item-variation',
+        'data-element-item-id',
+        'data-cm-ctg',
+        'data-cm-button',
+        'data-cm-default-group',
+        'data-cm-default-groups',
+        'data-cm-column-xl',
+        'data-cm-column-lg',
+        'data-cm-column-md',
+        'data-cm-column-sm',
+        'data-cm-column-sx',
+        'data-cm-column-tn',
+        'data-cm-pfctg',
+        'data-cm-lb-img',
+        'data-cm-section',
+        'data-cm-starting-group',
+        'data-cmb-id',
+        'data-cmb-src',
+        'data-cmb-class',
+        'data-cmb-classes',
+        'data-cmb-wrapper',
+        'data-cmb-sub',
+        'data-cmb-sub-style',
+        'data-cmb-style',
+        'data-cmb-unit',
+        'data-cmb-unit-available',
+        'data-cmb-option',
+        'data-cmb-option-name',
+        'data-cmb-element',
+        'data-cmb-element-type',
+        'data-cmb-dynamic',
+        'data-cmb-editable',
+        'data-cmb-type',
+        'data-cmb-resolution',
+        'data-cmb-tabs',
+        'data-cmb-child',
+        'data-cmb-attribute',
+        'data-exists-from-start',
+        'data-animation-duration',
+        'data-animation-delay',
+        'data-slide-element-font-size',
+        'data-x',
+        'data-y',
+        'data-cmb-dynamic-values',
+    ],
 ];

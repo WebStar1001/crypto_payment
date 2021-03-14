@@ -58,7 +58,7 @@ class UserDepositController extends Controller
         $data['wallet'] = $wallet;
         $data['title'] = __('Deposit :coin', ['coin' => $wallet->symbol]);
 
-        if ($wallet->coin->type === COIN_TYPE_CRYPTO) {
+        if (in_array($wallet->coin->type, [COIN_TYPE_CRYPTO, COIN_TYPE_ERC20])) {
             $data['walletAddress'] = __('Deposit is currently disabled.');
             if ($wallet->coin->deposit_status == ACTIVE) {
                 $api = $wallet->coin->getAssociatedApi();
@@ -70,7 +70,11 @@ class UserDepositController extends Controller
                     } else {
                         $response = $api->generateAddress();
                         if ($response['error'] === 'ok') {
-                            $wallet->update(['address' => $response['result']['address']]);
+                            $params = ['address' => $response['result']['address']];
+                            if (isset($response['result']['passphrase'])) {
+                                $params['passphrase'] = $response['result']['passphrase'];
+                            }
+                            $wallet->update($params);
                             $data['walletAddress'] = $response['result']['address'];
                         } else {
                             $data['walletAddress'] = $response['error'];

@@ -56,31 +56,38 @@ class SystemDepositController extends Controller
     public function create(Wallet $wallet)
     {
         $data['wallet'] = $wallet;
-        $wallet->load('coin');
         $data['title'] = __('Deposit :coin', ['coin' => $wallet->symbol]);
 
-        if ($wallet->coin->type === COIN_TYPE_CRYPTO) {
+        if (in_array($wallet->coin->type, [COIN_TYPE_CRYPTO, COIN_TYPE_ERC20])) {
             $data['walletAddress'] = __('Deposit is currently disabled.');
-            if ($data['wallet']->coin->deposit_status == ACTIVE) {
-                $wallet->getService();
-                if (is_null($wallet->service)) {
-                    $data['walletAddress'] = __('Unable to generate address.');
+            if ($wallet->coin->deposit_status == ACTIVE) {
+                $api = $wallet->coin->getAssociatedApi();
+
+                if ($wallet->address) {
+                    $data['walletAddress'] = $wallet->address;
                 } else {
-                    $response = $wallet->service->generateAddress();
-                    if ($response['error'] === 'ok') {
-                        $data['walletAddress'] = $response['result']['address'];
-                        $data['addressSvg'] = app(GenerateWalletAddressImage::class)->generateSvg($data['walletAddress']);
+                    if (is_null($api)) {
+                        $data['walletAddress'] = __('Unable to generate address.');
                     } else {
-                        $data['walletAddress'] = $response['error'];
+                        $response = $api->generateAddress();
+                        if ($response['error'] === 'ok') {
+                            $params = ['address' => $response['result']['address']];
+                            if (isset($response['result']['passphrase'])) {
+                                $params['passphrase'] = $response['result']['passphrase'];
+                            }
+                            $wallet->update($params);
+                            $data['walletAddress'] = $response['result']['address'];
+                        } else {
+                            $data['walletAddress'] = $response['error'];
+                        }
                     }
                 }
+                $data['addressSvg'] = app(GenerateWalletAddressImage::class)->generateSvg($data['walletAddress']);
             }
             return view('deposit.user.wallet_address', $data);
-        }
-        else if ($data['wallet']->coin->type == COIN_TYPE_FIAT) {
+        } else if ($wallet->coin->type == COIN_TYPE_FIAT) {
             $data['apis'] = Arr::only(fiat_apis(), $wallet->coin->api['selected_apis'] ?? []);
             $data['bankAccounts'] = BankAccount::where('user_id', Auth::id())
-                ->where('is_verified', VERIFIED)
                 ->where('is_active', ACTIVE)
                 ->pluck('bank_name', 'id');
             return view('deposit.admin.deposit_form', $data);

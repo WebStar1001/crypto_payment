@@ -11,6 +11,16 @@
     {{ Form::text('short_code', null, ['class' => form_validation($errors, 'short_code', 'lf-toggle-bg-input lf-toggle-border-color')]) }}
     <span class="invalid-feedback" data-name="short_code">{{ $errors->first('short_code') }}</span>
 </div>
+<div class="form-group ">
+    {{ Form::label('direction', __('Direction'),['class'=>'d-block']) }}
+    <div class="lf-switch">
+        {{ Form::radio('direction', PAGE_DIRECTION_LEFT_TO_RIGHT, true, ['id' => 'direction-ltr', 'class' => 'lf-switch-input']) }}
+        <label for="direction-ltr" class="lf-switch-label">{{ __('LTR') }}</label>
+
+        {{ Form::radio('direction', PAGE_DIRECTION_RIGHT_TO_LEFT, false, ['id' => 'direction-rtl', 'class' => 'lf-switch-input']) }}
+        <label for="direction-rtl" class="lf-switch-label">{{ __('RTL') }}</label>
+    </div>
+</div>
 
 {{--icon--}}
 <div class="form-group">
@@ -18,7 +28,7 @@
     <div class="fileinput fileinput-new" data-provides="fileinput">
         @if(isset($language) && $language->icon)
             <div class="fileinput-new img-thumbnail lf-w-120px lf-h-80px">
-                <img  alt="..."
+                <img alt="..."
                      src="{{ get_language_icon($language->icon) }}">
             </div>
         @else
@@ -26,7 +36,7 @@
                 <i class="fa fa-image fa-5x"></i>
             </div>
         @endif
-            <div class="fileinput-preview fileinput-exists img-thumbnail lf-w-120px lf-h-80px"></div>
+        <div class="fileinput-preview fileinput-exists img-thumbnail lf-w-120px lf-h-80px"></div>
         <div>
             <span id="button-group" class="btn btn-sm btn-outline-secondary btn-file">
                 <span class="fileinput-new">{{ __('Select Icon') }}</span>
@@ -40,13 +50,12 @@
         </div>
     </div>
 </div>
-
 @isset($language)
-{{--status--}}
+    {{--status--}}
     <div class="form-group">
         {{ Form::label('is_active', __('Status')) }}
         <div class="lf-select">
-        {{ Form::select('is_active', active_status(), null, ['class' => form_validation($errors, 'is_active', 'lf-toggle-bg-input lf-toggle-border-color')]) }}
+            {{ Form::select('is_active', active_status(), null, ['class' => form_validation($errors, 'is_active', 'lf-toggle-bg-input lf-toggle-border-color')]) }}
         </div>
         <span class="invalid-feedback" data-name="is_active">{{ $errors->first('is_active') }}</span>
     </div>

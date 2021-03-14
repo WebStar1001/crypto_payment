@@ -104,6 +104,20 @@ if (!function_exists('transaction_status')) {
     }
 }
 
+if (!function_exists('ethereum_deposit_status')) {
+    function ethereum_deposit_status($input = null)
+    {
+        $output = [
+            STATUS_PENDING => __('Pending'),
+            STATUS_PROCESSING => __('Processing'),
+            STATUS_COMPLETED => __('Completed'),
+            STATUS_FAILED => __('Failed'),
+        ];
+
+        return is_null($input) ? $output : $output[$input];
+    }
+}
+
 if (!function_exists('financial_status')) {
     function financial_status($input = null)
     {
@@ -306,6 +320,7 @@ if (!function_exists('id_type')) {
             $output = [
                 COIN_TYPE_FIAT => __('Fiat'),
                 COIN_TYPE_CRYPTO => __('Crypto'),
+                COIN_TYPE_ERC20 => __('ERC20'),
             ];
 
             return is_null($input) ? $output : $output[$input];
@@ -318,6 +333,9 @@ if (!function_exists('id_type')) {
             $output = [
                 API_COINPAYMENT => __('Coinpayments API'),
                 API_BITCOIN => __('BTC Forked API'),
+                API_ETHEREUM => __('Ethereum API'),
+                API_ERC20 => __('ERC20 API'),
+                API_OMNI_LAYER => __('Omni Layer'),
             ];
 
             return is_null($input) ? $output : $output[$input];
@@ -450,6 +468,20 @@ if (!function_exists('transaction_type')) {
         $output = [
             TRANSACTION_TYPE_BALANCE_INCREMENT => __('Increment'),
             TRANSACTION_TYPE_BALANCE_DECREMENT => __('Decrement'),
+        ];
+
+        return is_null($input) ? $output : $output[$input];
+    }
+}
+
+
+if (!function_exists('menu_types')) {
+    function menu_types($input = null)
+    {
+        $output = [
+            MENU_TYPE_ROUTE => __('Route'),
+            MENU_TYPE_LINK => __('Link'),
+            MENU_TYPE_PAGE => __('Page'),
         ];
 
         return is_null($input) ? $output : $output[$input];

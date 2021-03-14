@@ -23,6 +23,7 @@ class CreateLanguagesTable extends Migration
             $table->string('short_code')->unique();
             $table->string('icon')->nullable();
             $table->boolean('is_active')->default(ACTIVE);
+            $table->string('direction')->default(PAGE_DIRECTION_LEFT_TO_RIGHT);
             $table->timestamps();
         });
     }

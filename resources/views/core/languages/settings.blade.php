@@ -45,7 +45,7 @@
                                 </span>
                             </div>
                             <input type="text" class="form-control lf-toggle-bg-input lf-toggle-border-color" v-model="searchPhrase"
-                                   @keyup="searchTranslations" placeholder="Search">
+                                   @keyup="searchTranslations" placeholder="{{__('Search')}}">
                         </div>
 
                         <div id="setting-scroll" class="cm-mt-15">

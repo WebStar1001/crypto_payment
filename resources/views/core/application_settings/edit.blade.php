@@ -18,7 +18,7 @@
                                        data-toggle="collapse">
                                         <i class="fa {{ $value['icon'] }} mr-1"
                                            aria-hidden="true"></i>
-                                        {{ ucwords(preg_replace('/[-_]+/',' ',$key)) }}
+                                        {{ __(ucwords(preg_replace('/[-_]+/',' ',$key))) }}
                                         <i class="fa fa-caret-down fa-pull-right"></i>
                                     </a>
                                     <ul class="collapse {{ $key == $type? 'show': '' }} lf-toggle-bg-settings-submenu"
@@ -27,7 +27,7 @@
                                             <li class="nav-item {{ (array_key_last($value['settings']) != $itemKey)? 'border-bottom lf-toggle-border-color': '' }}">
                                                 <a class="nav-link {{ ($sub_type == $item)? 'active': '' }}"
                                                    href="{{route('application-settings.edit',['type'=>$key, 'sub_type' => $item])}}">
-                                                    {{ ucwords(preg_replace('/[-_]+/', ' ', $item)) }}
+                                                    {{ __(ucwords(preg_replace('/[-_]+/', ' ', $item))) }}
                                                 </a>
                                             </li>
                                         @endforeach

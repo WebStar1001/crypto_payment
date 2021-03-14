@@ -12,15 +12,14 @@ class Registered extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public $profile;
+    public $isApi;
+    public $verificationCode;
 
-    /**
-     * Create a new message instance.
-     *
-     * @param $profile
-     */
-    public function __construct($profile)
+    public function __construct($profile, $isApi=false, $verificationCode=null)
     {
         $this->profile = $profile;
+        $this->isApi = $isApi;
+        $this->verificationCode = $verificationCode;
     }
 
     /**

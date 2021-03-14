@@ -27,7 +27,7 @@ class PreferenceRequest extends FormRequest
     {
         return [
             'display_language' => [
-                Rule::exists('languages', 'sort_code')->where('is_active', ACTIVE)
+                Rule::exists('languages', 'short_code')->where('is_active', ACTIVE)
             ],
             'default_coin_pair' => [
                 Rule::exists('coin_pairs', 'name')->where('is_active', ACTIVE)

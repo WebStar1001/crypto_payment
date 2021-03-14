@@ -196,4 +196,26 @@ class CoinpaymentsApi
         return $data;
     }
 
+    public function getStatus(): array
+    {
+        try {
+            $response = $this->call("get_basic_info");
+            $response->throw();
+            if ($response->successful()) {
+                return [
+                    'status' => $response['error'] === 'ok',
+                    'version' => '1',
+                    'network' => 'Live'
+                ];
+            }
+        } catch (Exception $exception) {
+            Logger::error($exception, "[FAILED][CoinpaymentsApi][getStatus]");
+        }
+        return [
+            'status' => false,
+            'version' => '',
+            'network' => ''
+        ];
+    }
+
 }

@@ -10,7 +10,7 @@ else {
     <div class="lf-side-nav-handler lf-side-nav-controller"><i class="fa fa-arrow-circle-left"></i></div>
     <div class="text-center lf-side-nav-logo d-table w-100">
         <a href="{{route('home')}}"
-           class="align-middle p-2 d-table-cell lf-logo{{is_light_mode(settings('company_logo_light')? '': ' lf-logo-inversed')}}">
+           class="align-middle px-2 pt-2 d-table-cell lf-logo{{is_light_mode(settings('company_logo_light')? '': ' lf-logo-inversed')}}">
             <!-- lf-logo-inversed -->
             <img src="{{ company_logo() }}"
                  class="img-fluid"

@@ -1,5 +1,4 @@
 /*SYSTEM*/
-@use 'node_modules/bootstrap/scss/bootstrap.scss';
 @use 'node_modules/font-awesome/scss/font-awesome.scss';
 
 /* CORE */
@@ -24,3 +23,5 @@
 @use 'components/dashboard/cart_loader';
 @use 'components/color_theme/light';
 @use 'components/color_theme/dark';
+@use 'components/core/direction';
+

@@ -14,15 +14,18 @@ use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Deposit\AdminBankDepositAdjustController;
 use App\Http\Controllers\Deposit\AdminBankDepositReviewController;
 use App\Http\Controllers\Deposit\AdminDepositHistoryController;
+use App\Http\Controllers\Deposit\AdminEthereumDepositHistoryController;
 use App\Http\Controllers\Deposit\AdminUserDepositController;
 use App\Http\Controllers\Deposit\SystemDepositController;
 use App\Http\Controllers\KycManagement\AdminKycController;
 use App\Http\Controllers\KycManagement\ApproveKycVerificationController;
 use App\Http\Controllers\KycManagement\DeclineKycVerificationController;
 use App\Http\Controllers\KycManagement\ExpiredKycVerificationController;
+use App\Http\Controllers\NodeStatusController;
 use App\Http\Controllers\Orders\AdminUserOpenOrderController;
-use App\Http\Controllers\Page\ChangePageStatusController;
-use App\Http\Controllers\Page\PageController;
+use App\Http\Controllers\Page\AdminDynamicContentController;
+use App\Http\Controllers\Page\AdminPageController;
+use App\Http\Controllers\Page\AdminVisualEditController;
 use App\Http\Controllers\Post\ChangePostCategoryStatusController;
 use App\Http\Controllers\Post\ChangePostStatusController;
 use App\Http\Controllers\Post\PostCategoryController;
@@ -82,12 +85,14 @@ Route::group(['prefix' => 'admin'], function () {
         ->name('roles.status');
 
     //Application Setting
-    Route::get('application-settings', [ApplicationSettingController::class, 'index'])
-        ->name('application-settings.index');
-    Route::get('application-settings/{type}/{sub_type}', [ApplicationSettingController::class, 'edit'])
+    Route::get('application-settings/{type?}/{sub_type?}', [ApplicationSettingController::class, 'edit'])
         ->name('application-settings.edit');
     Route::put('application-settings/{type}/update/{sub_type?}', [ApplicationSettingController::class, 'update'])
         ->name('application-settings.update');
+
+    //Node check
+    Route::get('node-status', [NodeStatusController::class, 'index'])->name('admin.node-status.index');
+    Route::get('node-status/{coin}/{api}', [NodeStatusController::class, 'show'])->name('admin.node-status.show');
 
     //Admin Notice
     Route::resource('notices', NoticesController::class)
@@ -211,6 +216,10 @@ Route::group(['prefix' => 'admin'], function () {
         ->except('create', 'store', 'edit')
         ->names('admin.history.deposits');
 
+    Route::resource('history/ethereum-deposits', AdminEthereumDepositHistoryController::class)
+        ->only('index', 'show')
+        ->names('admin.history.ethereum-deposits');
+
     //System Bank Account
     Route::put('system-banks/toggle-status/{bankAccount}', [ChangeAdminBankAccountStatusController::class, 'change'])
         ->name('system-banks.toggle-status');
@@ -231,10 +240,13 @@ Route::group(['prefix' => 'admin'], function () {
         ->name('posts.toggle-status');
     Route::resource('posts', PostController::class);
 
-    // Page Management
-    Route::resource('pages', PageController::class)->names('pages')->except('show');
-    Route::put('pages/{page}/toggle-status', [ChangePageStatusController::class, 'changePublishStatus'])
-        ->name('pages.toggle-status');
+    //Page Management
+    Route::get('pages/{page:slug}/visual-edit', [AdminVisualEditController::class, 'edit'])->name('admin.pages.visual-edit');
+    Route::put('pages/{page}/visual-edit', [AdminVisualEditController::class, 'update'])->name('admin.pages.visual-edit');
+    Route::put('pages/{page}/published', [AdminPageController::class, 'togglePublish'])->name('admin.pages.published');
+    Route::put('pages/{page}/home-page', [AdminPageController::class, 'makeHomePage'])->name('admin.pages.home-page');
+    Route::get('get-dynamic-content', AdminDynamicContentController::class)->name('admin.dynamic-content');
+    Route::resource('pages', AdminPageController::class)->names('admin.pages')->except('show');
 });
 
 

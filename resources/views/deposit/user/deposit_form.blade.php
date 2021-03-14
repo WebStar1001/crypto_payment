@@ -78,7 +78,7 @@
                                         {{ Form::checkbox('deposit_policy', 1, false, ['id' => 'policy']) }}
                                         <label for="policy"> {{ __("Accept deposit's policy.") }}</label>
                                     </div>
-                                    <a class="ml-2 text-info" href=""><small>{{ __("Deposit's policy page") }}</small></a>
+                                    <a class="ml-2 text-info" href="{{ settings('deposit_policy_page_url') }}"><small>{{ __("Deposit's policy page") }}</small></a>
                                 </div>
                                 <span class="invalid-feedback" data-name="deposit_policy">{{ $errors->first('deposit_policy') }}</span>
                             </div>

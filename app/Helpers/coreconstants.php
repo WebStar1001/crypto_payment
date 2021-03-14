@@ -12,9 +12,10 @@ const USER_ROLE_ADMIN = 'admin';
 const USER_ROLE_USER = 'user';
 
 //Response keys
-const RESPONSE_STATUS_KEY = 'status';
+const RESPONSE_STATUS_KEY = 'success';
 const RESPONSE_MESSAGE_KEY = 'message';
 const RESPONSE_DATA = 'data';
+const RESPONSE_LOCALE_KEY = 'locale';
 
 //Response Types
 const RESPONSE_TYPE_SUCCESS = 'success';
@@ -43,6 +44,11 @@ const ROUTE_REDIRECT_TO_FINANCIAL_ACCOUNT_SUSPENDED = 'financial_account_suspend
 const REDIRECT_ROUTE_TO_USER_AFTER_LOGIN = 'profile.index';
 const REDIRECT_ROUTE_TO_LOGIN = 'login';
 
+const MENU_TYPE_ROUTE = 'route';
+const MENU_TYPE_LINK = 'link';
+const MENU_TYPE_PAGE = 'page';
+
+
 //Boolean Status
 const ACTIVE = 1;
 const INACTIVE = 0;
@@ -50,6 +56,10 @@ const VERIFIED = 1;
 const UNVERIFIED = 0;
 const ENABLE = 1;
 const DISABLE = 0;
+
+//direction
+const PAGE_DIRECTION_LEFT_TO_RIGHT = 'ltr';
+const PAGE_DIRECTION_RIGHT_TO_LEFT = 'rtl';
 
 //All Types Of Status
 const STATUS_INACTIVE = 'inactive';
@@ -79,11 +89,15 @@ const NOTICE_VISIBLE_TYPE_PRIVATE = "private";
 // currencies
 const COIN_TYPE_FIAT = "fiat";
 const COIN_TYPE_CRYPTO = "crypto";
+const COIN_TYPE_ERC20 = "erc20";
 
 //APIs
 const API_COINPAYMENT = "CoinpaymentsApi";
 const API_BITCOIN = "BitcoinForkedApi";
 const API_BANK = "BankApi";
+const API_ETHEREUM = "EthereumApi";
+const API_ERC20 = "ERC20Api";
+const API_OMNI_LAYER = "OmniLayerApi";
 
 // KYC types
 const KYC_TYPE_PASSPORT = 'passport';

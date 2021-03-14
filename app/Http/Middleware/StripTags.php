@@ -19,13 +19,8 @@ class StripTags extends TransformsRequest
     {
         $stripTags = config('commonconfig.strip_tags');
         if (in_array($key, $stripTags['escape_text'], true)) {
-            return Purify::clean(strip_tags($value, $stripTags['allowed_tag_for_escape_text']));
+            return Purify::clean($value);
         }
-
-        if (in_array($key, $stripTags['escape_full_text'], true)) {
-            return Purify::clean(strip_tags($value, $stripTags['allowed_tag_for_escape_full_text']));
-        }
-
-        return Purify::clean(strip_tags($value));
+        return strip_tags($value);
     }
 }

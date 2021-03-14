@@ -124,3 +124,10 @@ $(document).on('click', '.lf-theme-switcher .btn', function () {
         window.location.reload();
     }
 });
+
+
+if($('html').attr('dir')==='rtl'){
+    let cmDropdownMenuLeft = $('.dropdown-menu-left');
+    $('.dropdown-menu-right').removeClass('dropdown-menu-right').addClass('dropdown-menu-left');
+    cmDropdownMenuLeft.removeClass('dropdown-menu-left').addClass('dropdown-menu-right');
+}

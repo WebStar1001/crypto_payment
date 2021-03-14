@@ -30,6 +30,10 @@ return [
                         'field_type' => 'switch',
                         'field_label' => 'Maintenance mode',
                     ],
+                    'layout_mode_dark' => [
+                        'field_type' => 'switch',
+                        'field_label' => 'Layout Mode Dark',
+                    ],
                 ],
                 'accounts' => [
                     'registration_active_status' => [
@@ -88,18 +92,6 @@ return [
                         'validation' => 'image|size:512',
                         'field_label' => 'Logo Light',
                     ],
-//                    'logo_inversed_sidenav' => [
-//                        'field_type' => 'switch',
-//                        'field_value' => 'inversed_logo',
-//                        'default' => '1',
-//                        'field_label' => 'Active inversed Logo Color in side nav',
-//                    ],
-//                    'logo_inversed_secondary' => [
-//                        'field_type' => 'switch',
-//                        'field_value' => 'inversed_logo',
-//                        'default' => '1',
-//                        'field_label' => 'Active inversed Logo Color in no header layout',
-//                    ],
                     'favicon' => [
                         'field_type' => 'image',
                         'height' => 64,
@@ -115,18 +107,6 @@ return [
                         'default' => 0,
                         'field_label' => 'Visible Navigation type',
                     ],
-//                    'top_nav' => [
-//                        'field_type' => 'select',
-//                        'field_value' => 'top_nav_type',
-//                        'default' => '0',
-//                        'field_label' => 'Top nav Layout',
-//                    ],
-//                    'logo_inversed_primary' => [
-//                        'field_type' => 'switch',
-//                        'field_value' => 'inversed_logo',
-//                        'default' => '0',
-//                        'field_label' => 'Active inversed Logo Color in top nav',
-//                    ],
                     'side_nav' => [
                         'field_type' => 'select',
                         'field_value' => 'side_nav_type',
@@ -284,6 +264,18 @@ return [
                 ],
             ],
         ],
+        'deposit_settings' => [
+            'icon' => 'fa-money',
+            'settings' => [
+                'settings' => [
+                    'deposit_policy_page_url' => [
+                        'field_type' => 'text',
+                        'field_label' => 'Policy Page URL',
+                        'validation' => 'url',
+                    ],
+                ],
+            ],
+        ],
         'withdrawal_settings' => [
             'icon' => 'fa-send',
             'settings' => [
@@ -304,6 +296,11 @@ return [
                         'type_function' => true,
                         'field_value' => 'active_status',
                         'field_label' => 'Required Admin Approval',
+                    ],
+                    'withdrawal_policy_page_url' => [
+                        'field_type' => 'text',
+                        'field_label' => 'Policy Page URL',
+                        'validation' => 'url',
                     ],
                 ],
             ],
@@ -339,6 +336,24 @@ return [
                         'field_type' => 'text',
                         'field_label' => 'CH',
                         'field_value' => 'ch',
+                    ],
+                ],
+                'ethereum' => [
+                    'ethereum_server_url' => [
+                        'field_type' => 'text',
+                        'field_label' => 'Ethereum Server URL',
+                        'placeholder' => 'http://127.0.0.1:7545',
+                        'validation' => 'required|url',
+                    ],
+                    'ethereum_websocket_url' => [
+                        'field_type' => 'text',
+                        'field_label' => 'Ethereum Websocket URL',
+                        'placeholder' => 'ws://127.0.0.1:7546',
+                        'validation' => 'required|url',
+                    ],
+                    'ethereum_blockchain_explorer' => [
+                        'field_type' => 'text',
+                        'field_label' => 'Ethereum Blockchain Explorer',
                     ],
                 ],
             ],
@@ -379,7 +394,6 @@ return [
     'common_checkbox_input_wrapper' => [
         'input_start_tag' => '<div class="setting-checkbox">',
         'input_end_tag' => '</div>',
-//        'input_class'=>'setting-checkbox',
     ],
     'common_radio_input_wrapper' => [
         'input_start_tag' => '<div class="setting-checkbox">',
@@ -389,6 +403,5 @@ return [
     'common_toggle_input_wrapper' => [
         'input_start_tag' => '<div class="text-right">',
         'input_end_tag' => '</div>',
-//        'input_class'=>'setting-checkbox',
     ],
 ];

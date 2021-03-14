@@ -71,7 +71,7 @@ class SystemWithdrawalController extends Controller
 
     public function store(WithdrawalRequest $request, $wallet)
     {
-        if ($wallet->coin->type === COIN_TYPE_CRYPTO) {
+        if (in_array($wallet->coin->type, [COIN_TYPE_CRYPTO, COIN_TYPE_ERC20])) {
             $wallet->getService();
             if (is_null($wallet->service)) {
                 return redirect()
@@ -92,7 +92,7 @@ class SystemWithdrawalController extends Controller
             'symbol' => $wallet->symbol,
             'address' => $request->get('address'),
             'amount' => $request->get('amount'),
-            'api' => $wallet->coin->type === COIN_TYPE_CRYPTO ? $wallet->coin->payment_service['methods'] : $request->get('api'),
+            'api' => in_array($wallet->coin->type, [COIN_TYPE_CRYPTO, COIN_TYPE_ERC20]) ? $wallet->coin->payment_service['methods'] : $request->get('api'),
             'status' => STATUS_COMPLETED,
         ];
 

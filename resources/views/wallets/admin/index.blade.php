@@ -33,7 +33,7 @@
                                         <div class="dropdown-menu dropdown-menu-right" role="menu">
                                             @if( has_permission('admin.system-wallets.deposit.create'))
                                                 <a class="dropdown-item"
-                                                   href="{{ route('admin.system-wallets.deposit.create',$wallet->symbol) }}"><i
+                                                   href="{{ route('admin.system-wallets.deposit.create',$wallet->id) }}"><i
                                                         class="fa fa-plus text-success mr-2"></i>{{ __('Deposit') }}</a>
                                             @endif
                                             @if( has_permission('admin.system-wallets.deposit.index'))
@@ -42,7 +42,7 @@
                                             @endif
                                             @if( has_permission('admin.system-wallets.withdrawal.create'))
                                                 <a class="dropdown-item"
-                                                   href="{{ route('admin.system-wallets.withdrawal.create', $wallet->symbol) }}"><i
+                                                   href="{{ route('admin.system-wallets.withdrawal.create', $wallet->id) }}"><i
                                                         class="fa fa-minus text-danger mr-2"></i>{{ __('Withdraw') }}
                                                 </a>
                                             @endif

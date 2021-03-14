@@ -45,7 +45,7 @@
                         <div class="footer-widget">
                         @if(!empty(settings('footer_menu_title_'.$i)))
                             <h3 class="footer-widget-title">
-                                {{ settings('footer_menu_title_'.$i) }}
+                                {{ __(settings('footer_menu_title_'.$i)) }}
                             </h3>
                         @endif
                         @if(!empty(settings('footer_menu_'.$i)))
@@ -66,7 +66,7 @@
                     @if(!empty(settings('footer_copyright_text')))
                     {{ view_html(settings('footer_copyright_text')) }}
                     @else
-                    &copy; 2019-{{ date('Y') }} - <a href="{{ route('home') }}">{{ company_name() }}</a> - All Right Reserved.
+                    &copy; 2019-{{ date('Y') }} - <a href="{{ route('home') }}">{{ company_name() }}</a> - {{__('All Right Reserved')}}.
                     @endif
                 </div>
             </div>

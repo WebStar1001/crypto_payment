@@ -12,11 +12,13 @@
     @include('layouts.includes.top_header')
 
     @includeWhen((!isset($hideBreadcrumb) || !$hideBreadcrumb), 'layouts.includes.breadcrumb')
-    <div class="lf-toggle-bg-content py-3">
-        @yield('content')
-    </div>
+    <div id="app">
+        <div  class="lf-toggle-bg-content{{ isset($visualPage) ? '' : ' py-3' }}">
+            @yield('content')
+        </div>
 
-    @yield('extended-content')
+        @yield('extended-content')
+    </div>
 
     @include('layouts.includes.footer')
 

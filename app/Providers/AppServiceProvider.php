@@ -3,8 +3,12 @@
 namespace App\Providers;
 
 use App\Models\Core\ApplicationSetting;
+use App\Override\Api\BankApi;
 use App\Override\Api\BitcoinForkedApi;
 use App\Override\Api\CoinpaymentsApi;
+use App\Override\Api\ERC20Api;
+use App\Override\Api\EthereumApi;
+use App\Override\Api\OmniLayerApi;
 use App\Services\Core\LanguageService;
 use App\Services\Logger\LaraframeLogger;
 use App\Services\Orders\ProcessLimitOrderService;
@@ -13,6 +17,7 @@ use App\Services\Withdrawal\WithdrawalService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +27,6 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -43,8 +47,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-//        Paginator::defaultView('vendor.pagination.bootstrap-4');
-        Schema::defaultStringLength(191);
+
+        Paginator::useBootstrap();
+
         if (env("APP_PROTOCOL", 'http') == 'https') {
             URL::forceScheme('https');
         }
@@ -189,12 +194,6 @@ class AppServiceProvider extends ServiceProvider
             }
         });
 
-        /*        DB::listen(function ($query) {
-                    logs()->info($query->sql);
-                    logs()->info($query->bindings);
-                    logs()->info($query->time);
-                });*/
-
         $this->app->singleton(LanguageService::class, function () {
             return new LanguageService(
                 new Filesystem,
@@ -212,6 +211,22 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind("CoinpaymentsApi", function ($app, $parameters) {
             return new CoinpaymentsApi($parameters[0]);
+        });
+
+        $this->app->bind("BankApi", function ($app, $parameters) {
+            return new BankApi($parameters[0]);
+        });
+
+        $this->app->bind("EthereumApi", function ($app, $parameters) {
+            return new EthereumApi($parameters[0]);
+        });
+
+        $this->app->bind("ERC20Api", function ($app, $parameters) {
+            return new ERC20Api($parameters[0]);
+        });
+
+        $this->app->bind("OmniLayerApi", function ($app, $parameters) {
+            return new OmniLayerApi($parameters[0]);
         });
 
         $this->app->bind(WithdrawalService::class, function ($app, $parameters) {

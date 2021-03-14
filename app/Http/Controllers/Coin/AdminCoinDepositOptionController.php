@@ -28,6 +28,9 @@ class AdminCoinDepositOptionController extends Controller
         ];
 
         if( $request->has('minimum_deposit_amount') ) {
+            if($attributes['deposit_status'] === ACTIVE){
+                $coin->generateSystemAddress();
+            }
             $attributes['minimum_deposit_amount'] = $request->get('minimum_deposit_amount');
         }
 

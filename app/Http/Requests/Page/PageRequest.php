@@ -26,18 +26,15 @@ class PageRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'editor_content' => 'required',
-            'meta_keys.*' => 'required|string',
-            'meta_description' => 'nullable|max:160',
-            'is_published' => 'required|in:' . array_to_string(active_status()),
+        return [
+            'title' => [
+                'required',
+                Rule::unique('pages', 'title')->ignore($this->route()->parameter('page'))
+            ],
+            'slug' => [
+                'required',
+                Rule::unique('pages', 'slug')->ignore($this->route()->parameter('page'))
+            ]
         ];
-        $rules['title'] = [
-            'required',
-            Rule::unique('pages', 'title')->ignore($this->route('page')),
-            'max:255'
-        ];
-
-        return $rules;
     }
 }

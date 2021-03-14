@@ -20,6 +20,11 @@
     <script src="{{ asset('plugins/mcustomscrollbar/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <script src="{{ asset('plugins/slicknav/slicknav.min.js') }}"></script>
 @endif
+@if(language(App()->getLocale())['direction']==PAGE_DIRECTION_RIGHT_TO_LEFT)
+    <script src="{{ asset('plugins/bootstrap/bootstrap-rtl.min.js') }}"></script>
+@else
+    <script src="{{ asset('plugins/bootstrap/bootstrap.min.js') }}"></script>
+@endif
 @yield('extra-script')
 <script src="{{ asset('plugins/flash_message/flash.message.js') }}"></script>
 <script src="{{ asset('js/custom.js') }}"></script>

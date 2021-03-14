@@ -33,7 +33,11 @@ class RegisterRequest extends FormRequest
             "check_agreement" => "required",
         ];
 
-        if( env('APP_ENV') != 'local' && settings('display_google_captcha') == ACTIVE )
+        if(
+            env('APP_ENV') != 'local' &&
+            settings('display_google_captcha') == ACTIVE &&
+            !$this->is('api/*')
+        )
         {
             $validation['g-recaptcha-response'] = 'required|captcha';
         }

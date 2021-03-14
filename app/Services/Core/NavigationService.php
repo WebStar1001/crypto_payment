@@ -18,12 +18,13 @@ class NavigationService
         $this->navigation = $navigation;
     }
 
-//--------------- frontend navigation functions ------------------------
+    //--------------- frontend navigation functions ------------------------
 
     public function navigationSingle($navPlace, $template = 'default_nav')
     {
         $navConfig = config('navigation');
         $navData = Cache::get("navigation:$navPlace");
+
         if (is_null($navData)) {
             $navData = Navigation::where('slug', $navPlace)->first();
             if ($navData) {
@@ -81,35 +82,24 @@ class NavigationService
             if (!is_array($middleware)) {
                 continue;
             }
-            $parameters = $routeData->signatureParameters();
-            $isMenuable = true;
-            foreach ($parameters as $parameter) {
-                if (!$parameter->isOptional())
-                    $isMenuable = false;
-                break;
-            }
-            if ($isMenuable &&
-                (
-                    (in_array('menuable', $middleware)) ||
-                    (Auth::user() && in_array('permission', $middleware) && has_permission($routeData->getName())) ||
-                    (!Auth::user() && in_array('guest.permission', $middleware)) ||
-                    (in_array('verification.permission', $middleware) && Auth::user() && !Auth::user()->is_email_verified && settings('require_email_verification') == ACTIVE
-                    )
-                )
+            if (
+                (in_array('menuable', $middleware)) ||
+                (Auth::user() && in_array('permission', $middleware) && has_permission($routeData->getName())) ||
+                (!Auth::user() && in_array('guest.permission', $middleware)) ||
+                (in_array('verification.permission', $middleware) && Auth::user() && !Auth::user()->is_email_verified && settings('require_email_verification') == ACTIVE)
             ) {
                 $allAvailableRoutes[] = $routeData->getName();
             }
         }
 
-        $arrayColumn = array_column($navData, 'parent_id');
-        $routeColumn = array_column($navData, 'route');
-        foreach ($routeColumn as $key => $val) {
-            if (!empty($val) && !in_array($val, $allAvailableRoutes)) {
-                unset($arrayColumn[$key]);
+        foreach ($navData as $key=>  $rowData) {
+            if ($rowData['type'] === 'route' && !in_array($rowData['value']['name'], $allAvailableRoutes)) {
+                unset($navData[$key]);
             }
         }
+
         $output = $this->_tagBuilder($navTemplate['navigation_wrapper_start']);
-        $output .= $this->_navigationInside($navData, $allAvailableRoutes, $navTemplate, $arrayColumn);
+        $output .= $this->_navigationInside($navData, $allAvailableRoutes, $navTemplate);
         $output .= $navTemplate['navigation_wrapper_end'];
         return $output;
     }
@@ -134,7 +124,7 @@ class NavigationService
         return $startingWrapper;
     }
 
-    protected function _navigationInside($dbData, $allAvailableRoutes, $navTemplate, $arrayColumn, $parentId = 0, $level = 1, $megaMenu = 0)
+    /*protected function _navigationInside($dbData, $allAvailableRoutes, $navTemplate, $arrayColumn, $parentId = 0, $level = 1, $megaMenu = 0)
     {
         $result = '';
         if ($level == 2 && $megaMenu == 1 && !is_null($navTemplate['mega_menu_wrapper_start'])) {
@@ -149,7 +139,7 @@ class NavigationService
         $inside = '';
         foreach ($dbData as $rowKey => $rowValue) {
             $innerInside = '';
-            if ($rowValue['route'] != '' && !in_array($rowValue['route'], $allAvailableRoutes)) {
+            if ($rowValue['type'] === 'route' && !in_array($rowValue['value']['name'], $allAvailableRoutes)) {
                 continue;
             }
             if ($rowValue['parent_id'] == $parentId) {
@@ -203,6 +193,78 @@ class NavigationService
             $result = '';
         }
         return $result;
+    }*/
+
+    protected function _navigationInside($dbData, $allAvailableRoutes, $navTemplate, $parentId = 0, $level = 1, $megaMenu = 0)
+    {
+        $result = '';
+        if ($level == 2 && $megaMenu == 1 && !is_null($navTemplate['mega_menu_wrapper_start'])) {
+            $result .= $this->_tagBuilder($navTemplate['mega_menu_wrapper_start']);
+        } elseif ($level > 1) {
+            if (!is_null($navTemplate['navigation_sub_menu_wrapper_start'])) {
+                $result .= $this->_tagBuilder($navTemplate['navigation_sub_menu_wrapper_start']);
+            } else {
+                $result .= $this->_tagBuilder($navTemplate['navigation_wrapper_start']);
+            }
+        }
+        $inside = '';
+        $parentIds = array_column($dbData, 'parent_id');
+        foreach ($dbData as $rowKey => $rowValue) {
+            $innerInside = '';
+            if ($rowValue['type'] === 'route' && !in_array($rowValue['value']['name'], $allAvailableRoutes)) {
+                continue;
+            }
+            if ($rowValue['parent_id'] == $parentId) {
+                unset($dbData[$rowKey]);
+                $tempList = $this->_listItemStartBuilder($rowValue, $navTemplate, $level, $megaMenu);
+                if (!in_array($rowValue['order'], $parentIds) && in_array(strtolower($tempList['path']), ['#', 'javascript:;'])) {
+                    $innerInside .= '';
+                } else {
+                    $innerInside .= $tempList['list'];
+                }
+
+                if (in_array($rowValue['order'], $parentIds)) {
+                    $active_mega_menu = $rowValue['mega_menu'] == 1 ? 1 : $megaMenu;
+                    $tempResult = $this->_navigationInside($dbData, $allAvailableRoutes, $navTemplate, $rowValue['order'], ($level + 1), $active_mega_menu);
+
+                    if (empty($tempResult)) {
+                        $innerInside = '';
+                    } else {
+                        $innerInside .= $tempResult;
+                    }
+                }
+
+                if (!empty($innerInside)) {
+                    if ($level == 2 && $megaMenu == 1 && !is_null($navTemplate['mega_menu_section_wrapper_start'])) {
+                        $innerInside .= $this->_tagBuilder($navTemplate['mega_menu_section_wrapper_end']);
+                    } else {
+                        if ($level > 1 && !is_null($navTemplate['navigation_item_wrapper_in_sub_menu_start'])) {
+                            $innerInside .= $this->_tagBuilder($navTemplate['navigation_item_wrapper_in_sub_menu_end']);
+                        } else {
+                            $innerInside .= $this->_tagBuilder($navTemplate['navigation_item_wrapper_end']);
+                        }
+                    }
+                }
+                if (!empty($innerInside)) {
+                    $inside .= $innerInside;
+                }
+            }
+        }
+        if (!empty($inside)) {
+            $result .= $inside;
+            if ($level == 2 && $megaMenu == 1 && !is_null($navTemplate['mega_menu_wrapper_start'])) {
+                $result .= $this->_tagBuilder($navTemplate['mega_menu_wrapper_end']);
+            } elseif ($level > 1) {
+                if (!is_null($navTemplate['navigation_sub_menu_wrapper_start'])) {
+                    $result .= $this->_tagBuilder($navTemplate['navigation_sub_menu_wrapper_end']);
+                } else {
+                    $result .= $navTemplate['navigation_wrapper_end'];
+                }
+            }
+        } else {
+            $result = '';
+        }
+        return $result;
     }
 
     protected function _listItemStartBuilder($data, $navTemplate, $level, $megaMenu)
@@ -214,7 +276,7 @@ class NavigationService
         $activeClass = $linkBuilder['active_class'];
         $linkBeginning = $linkBuilder['link_beginning'];
         $linkEnding = $linkBuilder['link_ending'];
-// full-left/full-right/top-left/top-right/bottom-left/bottom-right/text-left/text-right
+        // full-left/full-right/top-left/top-right/bottom-left/bottom-right/text-left/text-right
         if ($data['beginning_text'] != null) {
             $beginningPart .= $navTemplate['navigation_item_beginning_wrapper_start'];
             if ($navTemplate['navigation_item_icon_position'] == 'top-left' &&
@@ -292,28 +354,36 @@ class NavigationService
         ];
     }
 
-// For single nav use
+    // For single nav use
 
     protected function _linkBuilder($dbData, $navTemplate)
     {
         $path = $navTemplate['navigation_item_no_link_text'];
-        if ($dbData['route'] != '') {
-            $path = route($dbData['route']);
+        if ($dbData['type'] === MENU_TYPE_ROUTE) {
+            $parameters = $dbData['value']['parameters'] ?? [];
+            if($parameters){
+                $path = route($dbData['value']['name'], $parameters);
+            }else{
+                $path = route($dbData['value']['name']);
+            }
+        }else if ($dbData['type'] === MENU_TYPE_PAGE) {
+            $path = route('page', $dbData['value']['name']);
         } else {
-            if (strpos($dbData['custom_link'], 'http://') === 0 || strpos($dbData['custom_link'], 'https://') === 0) {
-                if (strpos($dbData['custom_link'], '.') >= 8) {
-                    $path = $dbData['custom_link'];
+            if (strpos($dbData['value']['name'], 'http://') === 0 || strpos($dbData['value']['name'], 'https://') === 0) {
+                if (strpos($dbData['value']['name'], '.') >= 8) {
+                    $path = $dbData['value']['name'];
                 }
-            } elseif (strpos($dbData['custom_link'], 'www.') === 0) {
-                $path = 'http://' . $dbData['custom_link'];
-            } elseif ($dbData['custom_link'] == 'javascript:;') {
-                $path = $dbData['custom_link'];
+            } elseif (strpos($dbData['value']['name'], 'www.') === 0) {
+                $path = 'http://' . $dbData['value']['name'];
+            } elseif ($dbData['value']['name'] == 'javascript:;') {
+                $path = $dbData['value']['name'];
             } else {
-                $path = asset($dbData['custom_link']);
+                $path = asset($dbData['value']['name']);
             }
         }
         $activeClass = $navTemplate['navigation_item_link_active_class'] == '' ? 'link-active' : $navTemplate['navigation_item_link_active_class'];
-        $activeClass = !empty($dbData['route']) && $dbData['route'] == request()->route()->getName() ? $activeClass : (url()->current() == $path ? $activeClass : '');
+
+        $activeClass = url()->current() == $path ? $activeClass : '';
         $class = '';
 
         if ($navTemplate['navigation_item_active_class_on_anchor_tag'] === true && $activeClass !== '') {
@@ -339,7 +409,7 @@ class NavigationService
         ];
     }
 
-//--------------- backend navigation functions ------------------------
+    //--------------- backend navigation functions ------------------------
 
     public function backendMenuBuilder($slug)
     {
@@ -411,7 +481,7 @@ class NavigationService
 
             return [
                 RESPONSE_STATUS_KEY => true,
-                RESPONSE_MESSAGE_KEY => __('Menu has been saved successfully. Refresh the page to check the changes')
+                RESPONSE_MESSAGE_KEY => __('Menu has been saved successfully')
             ];
         }
         return [

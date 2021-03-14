@@ -183,7 +183,12 @@ function normalizeComponent (
     options._ssrRegister = hook
   } else if (injectStyles) {
     hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      ? function () {
+        injectStyles.call(
+          this,
+          (options.functional ? this.parent : this).$root.$options.shadowRoot
+        )
+      }
       : injectStyles
   }
 
@@ -192,7 +197,7 @@ function normalizeComponent (
       // for template-only hot-reload because in that case the render fn doesn't
       // go through the normalizer
       options._injectStyles = hook
-      // register for functioal component in vue file
+      // register for functional component in vue file
       var originalRender = options.render
       options.render = function renderWithStyleInjection (h, context) {
         hook.call(context)
@@ -432,16 +437,16 @@ new Vue({
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /*!****************************************!*\
   !*** multi ./resources/js/language.js ***!
   \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /media/mgrabbi/softwares/www/trademen/resources/js/language.js */"./resources/js/language.js");
+module.exports = __webpack_require__(/*! /var/www/html/trademen/resources/js/language.js */"./resources/js/language.js");
 
 
 /***/ })
 
-},[[1,"/js/manifest"]]]);
+},[[2,"/js/manifest"]]]);

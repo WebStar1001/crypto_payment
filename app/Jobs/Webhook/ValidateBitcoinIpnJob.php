@@ -3,6 +3,8 @@
 namespace App\Jobs\Webhook;
 
 use App\Jobs\Deposit\DepositProcessJob;
+use App\Jobs\OmniLayer\OmniLayerTransactionJob;
+use App\Models\Coin\Coin;
 use App\Override\Logger;
 use Exception;
 use Illuminate\Bus\Queueable;
@@ -26,11 +28,23 @@ class ValidateBitcoinIpnJob implements ShouldQueue
 
     public function handle()
     {
-        //Get Bitcoin API
-        $api = app(API_BITCOIN, [$this->currency]);
 
+        $coin = Coin::query()
+            ->where('symbol', $this->currency)
+            ->first();
+
+        if (empty($coin)) {
+            return;
+        }
+        //Get API
+        $api = $coin->getAssociatedApi();
+        $transactions = $api->validateIpn($this->data['txn_id']);
+
+        if (!$transactions) {
+            return;
+        }
         //Validate IPN and process deposit one by one in queue
-        if ($transactions = $api->validateIpn($this->data['txn_id'])) {
+        if ($coin->api['selected_apis'] === API_BITCOIN) {
 
             $status = $transactions['confirmations'] ? STATUS_COMPLETED : STATUS_PENDING;
 
@@ -49,6 +63,8 @@ class ValidateBitcoinIpnJob implements ShouldQueue
                     DepositProcessJob::dispatch($depositData);
                 }
             }
+        } else if ($coin->api['selected_apis'] === API_OMNI_LAYER) {
+            OmniLayerTransactionJob::dispatch($transactions);
         }
     }
 
