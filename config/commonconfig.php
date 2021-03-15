@@ -4,7 +4,7 @@ return [
     'fixed_roles' => [USER_ROLE_ADMIN, USER_ROLE_USER],
 
     'path_profile_image' => 'images/users/',
-    'path_image' => 'app/public/images/',
+    'path_image' => 'images/',
     'language_icon' => 'app/public/images/languages/',
     'ticket_attachment' => 'app/public/images/tickets/',
     'path_coin_icon' => 'app/public/images/coin-icons/',
