@@ -1066,7 +1066,7 @@ if (!function_exists('get_coin_pair_list')) {
 if (!function_exists('active_side_nav')) {
     function active_side_nav()
     {
-        return auth()->check() && (auth()->user()->assigned_role === USER_ROLE_ADMIN);
+        return auth()->check() && (auth()->user()->assigned_role === USER_ROLE_ADMIN)||(auth()->user()->assigned_role === USER_ROLE_SuperAdmin);
     }
 }
 

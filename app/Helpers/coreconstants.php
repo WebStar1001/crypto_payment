@@ -8,6 +8,7 @@ const TRADE_HISTORY_PER_PAGE = 50;
 const MY_OPEN_ORDER_PER_PAGE = 10;
 
 //Pre-defined roles
+const USER_ROLE_SuperAdmin = 'superadmin';
 const USER_ROLE_ADMIN = 'admin';
 const USER_ROLE_USER = 'user';
 
