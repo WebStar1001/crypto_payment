@@ -22,7 +22,6 @@
                     <span class="invalid-feedback" data-name="api[]">{{ $errors->first('api') }}</span>
                 @endif
             </div>
-
             <div v-if="showBanks">
                 <div class="form-group">
                     @if(!$bankAccounts->isEmpty())
@@ -69,6 +68,8 @@
     @include('coins.admin._style')
     @include('layouts.includes._avatar_and_loader_style')
 @endsection
+{{--{{old('api', isset($coin->api['selected_apis']) ? $coin->api['selected_apis'] : "")}} === {{API_OMNI_LAYER}}--}}
+{{--<?php print_r(API_OMNI_LAYER);exit;?>--}}
 @section('script')
     <script src="{{ asset('plugins/cvalidator/cvalidator-language-en.js') }}"></script>
     <script src="{{ asset('plugins/cvalidator/cvalidator.js') }}"></script>
@@ -86,7 +87,7 @@
             el: '#app',
             data: {
                 showBanks: "{{  (old('banks.0', ($coin->type === COIN_TYPE_FIAT && isset($coin->api['selected_banks']))) ? true : false )}}",
-                showPropertyId: "{{old('api', isset($coin->api['selected_apis']) ? $coin->api['selected_apis'] : "")}}" === "{{API_OMNI_LAYER}}"
+                showPropertyId: "{{old('api', isset($coin->api['selected_apis']) ? $coin->api['selected_apis'][0] : "")}}" === "{{API_OMNI_LAYER}}"
             },
             methods: {
                 onSelectBankMethods: function (event) {

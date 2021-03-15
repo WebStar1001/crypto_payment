@@ -2839,7 +2839,7 @@ cmbAllElements['cmb_content_box'] = {
     },
     html: `<div class="cmb_content_box cmb-element">
                 <div class="cmb-main">
-                <img src="/storage/images/regular_site/img-1.jpg" alt="cover-image" class="w-100 cover-image">
+                <img src="/public/storage/images/regular_site/img-1.jpg" alt="cover-image" class="w-100 cover-image">
                     <div class="cmb-content-box-icon">
                         <i class="fa fa-facebook cmb-icon"></i>
                     </div>
