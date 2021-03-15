@@ -15,7 +15,8 @@ use Illuminate\Support\{Arr,
     Facades\Request,
     Facades\Route,
     HtmlString,
-    Str};
+    Str
+};
 
 if (!function_exists('company_name')) {
     function company_name()
@@ -159,10 +160,9 @@ if (!function_exists('set_language')) {
                         ->view(cm_collector(6), [cm_collector(7) => new Exception(cm_repertory(9))])
                         ->send();
                 }
-            }else if (cm_collector(12)(
+            } else if (cm_collector(12)(
                 (cm_collector(8)())->{cm_collector(11)}(cm_repertory(10), false),
-                cm_repertory(11)))
-            {
+                cm_repertory(11))) {
                 cm_collector(13)(cm_collector(2)(cm_collector(3)));
             }
         } catch (Exception $exception) {
@@ -1030,14 +1030,16 @@ if (!function_exists('replace_current_route_action')) {
     }
 }
 
-if(!function_exists('hash_check')){
-    function hash_check(string $plainText, string $hashedValue){
+if (!function_exists('hash_check')) {
+    function hash_check(string $plainText, string $hashedValue)
+    {
         return Hash::check($plainText, $hashedValue);
     }
 }
 
-if(!function_exists('delete_file')){
-    function delete_file(string $fileFullPath){
+if (!function_exists('delete_file')) {
+    function delete_file(string $fileFullPath)
+    {
         return File::delete($fileFullPath);
     }
 }
@@ -1066,7 +1068,7 @@ if (!function_exists('get_coin_pair_list')) {
 if (!function_exists('active_side_nav')) {
     function active_side_nav()
     {
-        return auth()->check() && (auth()->user()->assigned_role === USER_ROLE_ADMIN)||(auth()->user()->assigned_role === USER_ROLE_SuperAdmin);
+        return (auth()->check() && (auth()->user()->assigned_role === USER_ROLE_ADMIN)) || (auth()->check() && (auth()->user()->assigned_role === USER_ROLE_SuperAdmin));
     }
 }
 
@@ -1074,8 +1076,8 @@ if (!function_exists('active_side_nav')) {
 if (!function_exists('is_light_mode')) {
     function is_light_mode($active, $inactive = '')
     {
-        if (isset($_COOKIE['style'])){
-            if($_COOKIE['style'] == 'light'){
+        if (isset($_COOKIE['style'])) {
+            if ($_COOKIE['style'] == 'light') {
                 return $active;
             }
             return $inactive;
