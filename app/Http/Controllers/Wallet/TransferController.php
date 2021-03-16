@@ -30,6 +30,7 @@ class TransferController extends Controller
         $wallets = Wallet::whereHas('coin', function ($query) {
             $query->where('type', 'crypto');
         })->where('user_id', Auth::id())
+            ->where('is_system_wallet', 0)
             ->orderBy('primary_balance', 'desc')->get();
 
         $data = $this->service->profile();
@@ -46,6 +47,7 @@ class TransferController extends Controller
         $wallets = Wallet::whereHas('coin', function ($query) {
             $query->where('type', 'crypto');
         })->where('user_id', Auth::id())
+            ->where('is_system_wallet', 0)
             ->orderBy('primary_balance', 'desc')->get();
         $data['wallets'] = $wallets;
 

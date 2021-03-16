@@ -22,7 +22,22 @@
                 </div>
             </div>
             <div class="form-group row" id="walletRow">
-                <label for="wallet_id" class="col-md-4 control-label pt-2 required">{{ __('Wallet Address') }}</label>
+                <div class="col-md-4">
+                    <label for="wallet_id" class="control-label pt-2 required">{{ __('Wallet Address') }}</label>
+                    <div class="row justify-content-center" style="margin-top: 160px;"><h3>Download QR Reader</h3></div>
+                    <div class="row" style="margin-top: -20px;">
+                        <div class="col-md-6">
+                            <a href="https://apps.apple.com/nl/app/qr-code-reader-code-scanner/id388175979" target="_blank">
+                                <img src="{{get_image('apple_store.png')}}" style="width: 120px;"/>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="https://play.google.com/store/apps/details?id=tw.mobileapp.qrcode.banner&hl=nl&gl=US" target="_blank">
+                                <img src="{{get_image('google_store.png')}}" style="width: 120px;"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-8 mb-2">
                     <div class="card lf-toggle-bg-card lf-toggle-border-color">
                         <div class="card-body">
@@ -31,8 +46,10 @@
                                     {{ view_html($addressSvg) }}
                                     <p class="text-muted my-2">{{ __('Scan QR code or copy the address') }}</p>
                                     <div class="d-flex justify-content-center">
-                                        <figcaption class="border line-height-maximum px-2" id="addressText">{{ $walletAddress }}</figcaption>
-                                        <button class="btn btn-sm btn-primary py-1" id="copyAddressBtn">{{ __('Copy') }}</button>
+                                        <figcaption class="border line-height-maximum px-2"
+                                                    id="addressText">{{ $walletAddress }}</figcaption>
+                                        <button class="btn btn-sm btn-primary py-1"
+                                                id="copyAddressBtn">{{ __('Copy') }}</button>
                                     </div>
                                 @else
                                     <figcaption class="py-4">
@@ -64,7 +81,7 @@
         $(document).ready(function () {
             $('#walletRow').find('select').change(function () {
                 let symbol = $('#walletRow').find('select option:selected').text();
-                location.href = {{config('url')}}"/wallets/"+symbol+'/receive';
+                location.href = {{config('url')}}"/wallets/" + symbol + '/receive';
             })
         });
     </script>
