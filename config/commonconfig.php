@@ -10,7 +10,7 @@ return [
     'path_coin_icon' => 'app/public/images/coin-icons/',
     'path_cart_icon' => 'app/public/images/cart-icons/',
     'path_regular_site_image' => 'app/public/images/regular_site/',
-    'path_dashboard_icon' => 'app/public/images/dashboard-icons/',
+    'path_dashboard_icon' => 'images/dashboard-icons/',
     'path_post_feature_image' => 'app/public/images/posts/',
     'path_deposit_receipt' => 'app/public/images/deposit/receipts/',
     'email_status' => [

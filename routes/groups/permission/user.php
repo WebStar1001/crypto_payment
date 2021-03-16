@@ -19,6 +19,7 @@ use App\Http\Controllers\Referral\UserReferralController;
 use App\Http\Controllers\Ticket\UserTicketController;
 use App\Http\Controllers\UserActivity\UserActivityController;
 use App\Http\Controllers\Wallet\UserWalletController;
+use App\Http\Controllers\Wallet\TransferController;
 use App\Http\Controllers\Withdrawal\UserWithdrawalController;
 use Illuminate\Support\Facades\Route;
 
@@ -78,6 +79,8 @@ Route::get('ticket/{ticket}/download-attachment/{fileName}', [UserTicketControll
 //Wallet
 Route::get('wallets', [UserWalletController::class, 'index'])
     ->name('user.wallets.index');
+Route::get('wallets/transfer', [TransferController::class, 'index'])
+    ->name('user.wallets.transfer');
 
 //Deposit
 Route::resource('wallets/{wallet}/deposits', UserDepositController::class)->except('edit')

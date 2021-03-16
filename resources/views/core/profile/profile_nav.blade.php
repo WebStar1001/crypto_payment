@@ -11,4 +11,6 @@
        href="{{ route('kyc-verifications.index') }}">{{ __('KYC Verification') }}</a>
     <a class="nav-link {{ is_current_route(['referral.link.show'],'active') }}"
        href="{{ route('referral.link.show') }}">{{ __('Referral Link') }}</a>
+    <a class="nav-link {{ is_current_route(['user.wallets.transfer'],'active') }}"
+       href="{{ route('user.wallets.transfer') }}">{{ __('Send & Receive') }}</a>
 </div>
