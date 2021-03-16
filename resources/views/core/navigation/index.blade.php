@@ -2,7 +2,7 @@
 @section('title', $title)
 @section('style')
     <link rel="stylesheet"
-          href="{{mix('css/menu-builder.css')}}">
+          href="{{asset(mix('css/menu-builder.css'))}}">
 @endsection
 @section('content')
     <div class="container my-5 lf-backend-navigation-wrapper">
