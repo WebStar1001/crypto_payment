@@ -3,38 +3,42 @@
 @section('content')
     <div class="container my-5">
         @component('components.profile', ['user' => $user])
-            {{ Form::open(['route'=>['profile.update-password'],'class'=>'form-horizontal validator','method'=>'put', 'id' => 'passwordChangeForm']) }}
+            {{ Form::open(['route'=>['user.wallets.transfer.send'],'class'=>'form-horizontal validator','method'=>'put', 'id' => 'transferForm']) }}
             {{--password--}}
             <div class="form-group row">
-                <label for="password" class="col-md-4 control-label pt-2 required">{{ __('Current Password') }}</label>
+                <label for="wallet_id" class="col-md-4 control-label pt-2 required">{{ __('Wallet') }}</label>
                 <div class="col-md-8">
-                    {{ Form::password('password', ['class'=>form_validation($errors, 'password'), 'placeholder' => __('Enter current password'), 'id' => 'password']) }}
-                    <span class="invalid-feedback" data-name="password">{{ $errors->first('password') }}</span>
+                    <select class="form-control" name="wallet_id">
+                        <option></option>
+                        @foreach($wallets as $item)
+                            <option value="{{$item->id}}">{{$item->symbol}}</option>
+                        @endforeach
+                    </select>
+                    <span class="invalid-feedback" data-name="sender">{{ $errors->first('wallet_id') }}</span>
                 </div>
             </div>
 
             {{--new password--}}
             <div class="form-group row">
-                <label for="new_password" class="col-md-4 control-label pt-2 required">{{ __('New Password') }}</label>
+                <label for="sender" class="col-md-4 control-label pt-2 required">{{ __('Sender\'s email or wallet address') }}</label>
                 <div class="col-md-8">
-                    {{ Form::password('new_password', ['class'=>form_validation($errors, 'new_password'), 'placeholder' => __('Enter new password'), 'id' => 'new_password']) }}
-                    <span class="invalid-feedback" data-name="new_password">{{ $errors->first('new_password') }}</span>
+                    <input type="text" class="form-control" id="sender" name="sender"/>
+                    <span class="invalid-feedback" data-name="sender">{{ $errors->first('sender') }}</span>
                 </div>
             </div>
 
             {{--email--}}
             <div class="form-group row">
-                <label for="new_password_confirmation" class="col-md-4 control-label pt-2 required">{{ __('Confirm New Password') }}</label>
+                <label for="amount"
+                       class="col-md-4 control-label pt-2 required">{{ __('Amount') }}</label>
                 <div class="col-md-8">
-                    {{ Form::password('new_password_confirmation', ['class'=>form_validation($errors,
-                    'new_password_confirmation'),
-                    'placeholder' => __('Confirm new password'), 'id' => 'new_password_confirmation']) }}
-                    <span class="invalid-feedback" data-name="new_password_confirmation">{{ $errors->first('new_password_confirmation') }}</span>
+                    <input type="number" class="form-control" id="amount" name="amount"/>
+                    <span class="invalid-feedback" data-name="sender">{{ $errors->first('amount') }}</span>
                 </div>
             </div>
             {{--submit button--}}
             <div class="form-group">
-                {{ Form::submit(__('Update Password'),['class'=>'btn btn-info lf-card-btn form-submission-button']) }}
+                {{ Form::submit(__('Send'),['class'=>'btn btn-info lf-card-btn form-submission-button']) }}
                 {{ Form::button('<i class="fa fa-undo"></i>',['class'=>'btn btn-danger reset-button lf-card-btn']) }}
             </div>
             {{ Form::close() }}
@@ -53,11 +57,11 @@
         "use strict";
 
         $(document).ready(function () {
-            var form =$('#passwordChangeForm').cValidate({
-                rules : {
-                    'password' : 'required',
-                    'new_password' : 'required|between:6,32',
-                    'new_password_confirmation' : 'required|same:new_password',
+            var form = $('#passwordChangeForm').cValidate({
+                rules: {
+                    'password': 'required',
+                    'new_password': 'required|between:6,32',
+                    'new_password_confirmation': 'required|same:new_password',
                 },
             });
         });

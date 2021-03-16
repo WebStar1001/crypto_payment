@@ -82,6 +82,9 @@ Route::get('wallets', [UserWalletController::class, 'index'])
 Route::get('wallets/transfer', [TransferController::class, 'index'])
     ->name('user.wallets.transfer');
 
+Route::post('wallets/transfer', [TransferController::class, 'send'])
+    ->name('user.wallets.transfer.send');
+
 //Deposit
 Route::resource('wallets/{wallet}/deposits', UserDepositController::class)->except('edit')
     ->names('user.wallets.deposits');
