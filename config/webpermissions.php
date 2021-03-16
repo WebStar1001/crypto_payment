@@ -306,6 +306,10 @@ return [
                     'user.wallets.withdrawals.store',
                     'user.wallets.withdrawals.confirmation'
                 ],
+                'transfer_access' => [
+                    'user.wallets.transfer',
+                    'user.wallets.transfer'
+                ],
             ],
             'back_accounts' => [
                 ROUTE_GROUP_READER_ACCESS => [
