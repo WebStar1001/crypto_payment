@@ -5,7 +5,7 @@
         @component('components.profile', ['user' => $user])
             {{ Form::open(['route'=>['user.wallets.transfer.send'],'class'=>'form-horizontal validator','method'=>'put', 'id' => 'transferForm']) }}
             {{--password--}}
-            <div class="form-group row">
+            <div class="form-group row" id="walletRow">
                 <label for="wallet_id" class="col-md-4 control-label pt-2 required">{{ __('Wallet') }}</label>
                 <div class="col-md-8">
                     <select class="form-control" name="wallet_id">
@@ -19,8 +19,9 @@
             </div>
 
             {{--new password--}}
-            <div class="form-group row">
-                <label for="sender" class="col-md-4 control-label pt-2 required">{{ __('Sender\'s email or wallet address') }}</label>
+            <div class="form-group row" id="senderRow">
+                <label for="sender"
+                       class="col-md-4 control-label pt-2 required">{{ __('Sender\'s email or wallet address') }}</label>
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="sender" name="sender"/>
                     <span class="invalid-feedback" data-name="sender">{{ $errors->first('sender') }}</span>
@@ -28,7 +29,7 @@
             </div>
 
             {{--email--}}
-            <div class="form-group row">
+            <div class="form-group row" id="amountRow">
                 <label for="amount"
                        class="col-md-4 control-label pt-2 required">{{ __('Amount') }}</label>
                 <div class="col-md-8">
@@ -57,13 +58,25 @@
         "use strict";
 
         $(document).ready(function () {
-            var form = $('#passwordChangeForm').cValidate({
-                rules: {
-                    'password': 'required',
-                    'new_password': 'required|between:6,32',
-                    'new_password_confirmation': 'required|same:new_password',
-                },
-            });
+            // $('#typeRow, #walletRow').find('select').change(function () {
+            //     let transferType = $('#typeRow').find('select').val();
+            //     let wallet_id = $('#walletRow').find('select').val();
+            //     if(wallet_id != '' && transferType != ''){
+            //         $.ajax({
+            //             type: "get",
+            //             url: "wallets/transfer/{"+wallet+"}/getaddress",
+            //             dataType:"json",
+            //             data: dataString,
+            //             success: function (response) {
+            //                 if(response.status === "success") {
+            //                     // do something with response.message or whatever other data on success
+            //                 } else if(response.status === "error") {
+            //                     // do something with response.message or whatever other data on error
+            //                 }
+            //             }
+            //         })
+            //     }
+            // })
         });
     </script>
 @endsection

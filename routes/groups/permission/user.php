@@ -79,10 +79,12 @@ Route::get('ticket/{ticket}/download-attachment/{fileName}', [UserTicketControll
 //Wallet
 Route::get('wallets', [UserWalletController::class, 'index'])
     ->name('user.wallets.index');
-Route::get('wallets/transfer', [TransferController::class, 'index'])
-    ->name('user.wallets.transfer');
+Route::get('wallets/send', [TransferController::class, 'send'])
+    ->name('user.wallets.send');
+Route::get('wallets/{wallet}/receive', [TransferController::class, 'receive'])
+    ->name('user.wallets.receive');
 
-Route::post('wallets/transfer', [TransferController::class, 'send'])
+Route::post('wallets/transfer', [TransferController::class, 'sendBalance'])
     ->name('user.wallets.transfer.send');
 
 //Deposit

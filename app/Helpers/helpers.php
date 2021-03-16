@@ -864,11 +864,11 @@ if (!function_exists('get_notices')) {
         if (Cookie::has($cookeName)) {
             $seenNoticeIds = json_decode(Cookie::get($cookeName), true);
             $notices = $notices->filter(function ($notice) use (&$seenNoticeIds) {
-                if (array_key_exists($notice->id, $seenNoticeIds) && $notice->updated_at->equalTo(Carbon::parse($seenNoticeIds[$notice->id]))) {
+//                if (array_key_exists($notice->id, $seenNoticeIds) && $notice->updated_at->equalTo(Carbon::parse($seenNoticeIds[$notice->id]))) {
                     return false;
-                }
-                $seenNoticeIds[$notice->id] = $notice->updated_at;
-                return true;
+//                }
+//                $seenNoticeIds[$notice->id] = $notice->updated_at;
+//                return true;
             });
         } else {
             $seenNoticeIds = $notices->pluck('updated_at', 'id')->toArray();
