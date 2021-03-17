@@ -7,12 +7,27 @@
             {{ view_html($inlineUrl) }}
             <div class="input-group copy-group">
                 <input type="text" class="form-control form-control-sm" id="link" readonly value="{{ $secretKey }}">
-                <button class="btn btn-sm btn-dark" title="{{ __('Copy Link') }}" data-toggle="tooltip" type="button" onclick="copyLink()"><i class="fa fa-clipboard text-aqua"></i></button>
+                <button class="btn btn-sm btn-dark" title="{{ __('Copy Link') }}" data-toggle="tooltip" type="button"
+                        onclick="copyLink()"><i class="fa fa-clipboard text-aqua"></i></button>
             </div>
             <figcaption class="help-block small text-justify my-2">
                 {{ __('NOTE: This code changes each time you enable 2FA. If you disable 2FA this code will no longer be valid.') }}
             </figcaption>
         </figure>
+        <div class="row justify-content-center"><h3>Download Google Authentication</h3></div>
+        <div class="row" style="margin-top: -40px;">
+            <div class="col-md-6">
+                <a href="https://apps.apple.com/nl/app/google-authenticator/id388497605" target="_blank">
+                    <img src="{{get_image('apple_store.png')}}" style="width: 150px;"/>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=nl&gl=US"
+                   target="_blank">
+                    <img src="{{get_image('google_store.png')}}" style="width: 150px;"/>
+                </a>
+            </div>
+        </div>
     </div>
     <div class="col-lg-6">
         {!! Form::open(['route'=>['profile.google-2fa.store', $secretKey], 'class'=>'validator', 'id' => 'googleTwoFaForm']) !!}
@@ -34,7 +49,7 @@
         {{--google app code--}}
         <div class="form-group">
             <label for="google_app_code"
-                  class="control-label">{{ __('Enter G2FA App Code') }}</label>
+                   class="control-label">{{ __('Enter G2FA App Code') }}</label>
             {{ Form::text('google_app_code', null, ['class'=> form_validation($errors, 'google_app_code',), 'placeholder' => __('Enter G2FA App Code'), 'id' => 'google_app_code']) }}
             <span class="invalid-feedback" data-name="google_app_code">{{ $errors->first('google_app_code') }}</span>
         </div>
@@ -45,7 +60,7 @@
 
         {{--back_up--}}
         <div class="lf-checkbox">
-                {{ Form::checkbox('back_up', ACTIVE, INACTIVE,['id' => 'back_up']) }}
+            {{ Form::checkbox('back_up', ACTIVE, INACTIVE,['id' => 'back_up']) }}
             <label for="back_up">
                 {{ __('I have backed up my 16-digit key.') }}
             </label>
@@ -54,8 +69,8 @@
 
         {{--submit button--}}
         <div class="form-group">
-           {{ Form::submit(__('Set Google Authentication'), ['class'=>'btn btn-info form-submission-button btn-block']) }}
-       </div>
+            {{ Form::submit(__('Set Google Authentication'), ['class'=>'btn btn-info form-submission-button btn-block']) }}
+        </div>
         {!! Form::close() !!}
     </div>
 </div>
