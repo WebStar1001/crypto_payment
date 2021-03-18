@@ -24,7 +24,7 @@ class AdminCoinPairController extends Controller
 
         $searchFields = [
             ['name', __('Name')],
-            ['coin', __('Coin')],
+            ['trade_coin', __('Coin')],
             ['base_coin', __('Base Coin')],
         ];
 
