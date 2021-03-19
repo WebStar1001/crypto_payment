@@ -85,7 +85,7 @@ Route::get('wallets/send', [TransferController::class, 'send'])
     ->name('user.wallets.send');
 Route::get('wallets/{wallet}/receive', [TransferController::class, 'receive'])
     ->name('user.wallets.receive');
-Route::post('wallets/send', [TransferController::class, 'sendBalance'])
+Route::post('wallets/sendbalance', [TransferController::class, 'sendBalance'])
     ->name('user.wallets.sendBalance');
 Route::get('wallets/send/history', SendHistoryController::class)
     ->name('user.wallets.send.history');
