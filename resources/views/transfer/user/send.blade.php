@@ -3,7 +3,7 @@
 @section('content')
     <div class="container my-5">
         @component('components.profile', ['user' => $user])
-            {{ Form::open(['route'=>['user.wallets.transfer.send'],'class'=>'form-horizontal validator','method'=>'put', 'id' => 'transferForm']) }}
+            {{ Form::open(['route'=>['user.wallets.send'],'class'=>'form-horizontal validator','method'=>'post', 'id' => 'transferForm']) }}
             {{--password--}}
             <div class="form-group row" id="walletRow">
                 <label for="wallet_id" class="col-md-4 control-label pt-2 required">{{ __('Wallet') }}</label>
@@ -20,11 +20,11 @@
 
             {{--new password--}}
             <div class="form-group row" id="senderRow">
-                <label for="sender"
+                <label for="address"
                        class="col-md-4 control-label pt-2 required">{{ __('Sender\'s email or wallet address') }}</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="sender" name="sender"/>
-                    <span class="invalid-feedback" data-name="sender">{{ $errors->first('sender') }}</span>
+                    <input type="text" class="form-control" id="address" name="address" value="eric9178vadim@gmail.com"/>
+                    <span class="invalid-feedback" data-name="address">{{ $errors->first('address') }}</span>
                 </div>
             </div>
 
@@ -33,7 +33,7 @@
                 <label for="amount"
                        class="col-md-4 control-label pt-2 required">{{ __('Amount') }}</label>
                 <div class="col-md-8">
-                    <input type="number" class="form-control" id="amount" name="amount"/>
+                    <input type="number" class="form-control" id="amount" name="amount" value="100"/>
                     <span class="invalid-feedback" data-name="sender">{{ $errors->first('amount') }}</span>
                 </div>
             </div>

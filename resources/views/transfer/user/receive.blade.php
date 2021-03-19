@@ -3,7 +3,7 @@
 @section('content')
     <div class="container my-5">
         @component('components.profile', ['user' => $user])
-            {{ Form::open(['route'=>['user.wallets.transfer.send'],'class'=>'form-horizontal validator','method'=>'put', 'id' => 'transferForm']) }}
+            {{ Form::open(['','class'=>'form-horizontal validator','method'=>'put', 'id' => 'transferForm']) }}
             {{--password--}}
             <div class="form-group row" id="walletRow">
                 <label for="wallet_id" class="col-md-4 control-label pt-2 required">{{ __('Wallet') }}</label>

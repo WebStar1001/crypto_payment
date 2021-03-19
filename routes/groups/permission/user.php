@@ -19,7 +19,9 @@ use App\Http\Controllers\Referral\UserReferralController;
 use App\Http\Controllers\Ticket\UserTicketController;
 use App\Http\Controllers\UserActivity\UserActivityController;
 use App\Http\Controllers\Wallet\UserWalletController;
-use App\Http\Controllers\Wallet\TransferController;
+use App\Http\Controllers\Transfer\TransferController;
+use App\Http\Controllers\Transfer\SendHistoryController;
+use App\Http\Controllers\Transfer\ReceiveHistoryController;
 use App\Http\Controllers\Withdrawal\UserWithdrawalController;
 use Illuminate\Support\Facades\Route;
 
@@ -83,10 +85,12 @@ Route::get('wallets/send', [TransferController::class, 'send'])
     ->name('user.wallets.send');
 Route::get('wallets/{wallet}/receive', [TransferController::class, 'receive'])
     ->name('user.wallets.receive');
-
-Route::post('wallets/transfer', [TransferController::class, 'sendBalance'])
-    ->name('user.wallets.transfer.send');
-
+Route::post('wallets/send', [TransferController::class, 'sendBalance'])
+    ->name('user.wallets.sendBalance');
+Route::get('wallets/send/history', SendHistoryController::class)
+    ->name('user.wallets.send.history');
+Route::get('wallets/receive/history', ReceiveHistoryController::class)
+    ->name('user.wallets.receive.history');
 //Deposit
 Route::resource('wallets/{wallet}/deposits', UserDepositController::class)->except('edit')
     ->names('user.wallets.deposits');
