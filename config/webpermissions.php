@@ -307,8 +307,11 @@ return [
                     'user.wallets.withdrawals.confirmation'
                 ],
                 'transfer_access' => [
-                    'user.wallets.transfer',
-                    'user.wallets.transfer'
+                    'user.wallets.send',
+                    'user.wallets.receive',
+                    'user.wallets.sendBalance',
+                    'user.wallets.send.history',
+                    'user.wallets.receive.history'
                 ],
             ],
             'back_accounts' => [
