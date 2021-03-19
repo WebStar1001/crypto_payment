@@ -18,7 +18,6 @@ class UserOrderController extends Controller
             ['amount', __('Amount')],
             ['trade_coin', __('Coin')],
             ['base_coin', __('Base Coin')],
-            ['coin_pair', __('Coin Pair')],
         ];
 
         $orderFields = [

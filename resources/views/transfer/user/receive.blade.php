@@ -83,6 +83,18 @@
                 let symbol = $('#walletRow').find('select option:selected').text();
                 location.href = {{config('url')}}"/wallets/" + symbol + '/receive';
             })
+            var copyAddressBtn = $("#copyAddressBtn");
+            copyAddressBtn.on("click", function () {
+                copyToClipboard("#addressText");
+            });
+
+            function copyToClipboard(element) {
+                var $temp = $("<input>");
+                $("body").append($temp);
+                $temp.val($(element).html()).select();
+                document.execCommand("copy");
+                $temp.remove();
+            }
         });
     </script>
 @endsection
