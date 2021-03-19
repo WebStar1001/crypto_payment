@@ -48,7 +48,7 @@
                                     <div class="d-flex justify-content-center">
                                         <figcaption class="border line-height-maximum px-2"
                                                     id="addressText">{{ $walletAddress }}</figcaption>
-                                        <button class="btn btn-sm btn-primary py-1"
+                                        <button class="btn btn-sm btn-primary py-1" type="button"
                                                 id="copyAddressBtn">{{ __('Copy') }}</button>
                                     </div>
                                 @else
