@@ -176,7 +176,7 @@ class TransferController extends Controller
         DB::commit();
 
         return redirect()
-            ->route('transfer.user.send')
+            ->route('user.wallets.send.history')
             ->with(RESPONSE_TYPE_SUCCESS, __("Your Transfer has been placed successfully."));
     }
 }
