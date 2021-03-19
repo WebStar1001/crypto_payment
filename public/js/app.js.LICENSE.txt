@@ -1,4 +1,12 @@
 /*!
+ * Pusher JavaScript Library v6.0.3
+ * https://pusher.com/
+ *
+ * Copyright 2020, Pusher
+ * Released under the MIT licence.
+ */
+
+/*!
  * Sizzle CSS Selector Engine v2.3.5
  * https://sizzlejs.com/
  *
@@ -7,13 +15,6 @@
  * https://js.foundation/
  *
  * Date: 2020-03-14
- */
-
-/*!
- * The buffer module from node.js, for the browser.
- *
- * @author   Feross Aboukhadijeh <http://feross.org>
- * @license  MIT
  */
 
 /*!
@@ -29,8 +30,6 @@
  *
  * Date: 2020-05-04T22:49Z
  */
-
-/*! https://mths.be/utf8js v2.1.2 by @mathias */
 
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
