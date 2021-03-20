@@ -1,0 +1,43 @@
+
+.faq-area .accordion-wrapper .card {
+    background-color: transparent;
+    border: none;
+    margin-bottom: 20px; }
+.faq-area .accordion-wrapper .card .card-body {
+    padding-top: 27px;
+    padding-bottom: 10px; }
+.faq-area .accordion-wrapper .card .card-header {
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
+    border: none; }
+.faq-area .accordion-wrapper .card .card-header h5 button {
+    padding: 16px 30px;
+    background-color: #fff;
+    border-radius: 30px !important;
+    position: relative;
+    width: 100%;
+    text-align: left;
+    text-decoration: none;
+    color: #717c8c; }
+.faq-area .accordion-wrapper .card .card-header h5 button:after {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: #ff7200;
+    color: #fff;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 50px;
+    content: "";
+    font-family: "Fontawesome";
+    font-weight: 900;
+    -ms-transform: translateY(-50%);
+    /* IE 9 */
+    -webkit-transform: translateY(-50%);
+    /* Chrome, Safari, Opera */
+    transform: translateY(-50%); }
+.faq-area .accordion-wrapper .card .card-header h5 button[aria-expanded="true"]:after {
+    content: "\f106"; }

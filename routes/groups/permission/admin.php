@@ -42,6 +42,8 @@ use App\Http\Controllers\Withdrawal\AdminUserWithdrawalController;
 use App\Http\Controllers\Withdrawal\AdminWithdrawalHistoryController;
 use App\Http\Controllers\Withdrawal\AdminWithdrawalReviewController;
 use App\Http\Controllers\Withdrawal\SystemWithdrawalController;
+use App\Http\Controllers\Faq\FaqController;
+
 use Illuminate\Support\Facades\Route;
 use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
@@ -226,6 +228,18 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('system-banks', AdminBankManagementController::class)
         ->except('show')
         ->names('system-banks');
+
+    Route::get('faqs-create', [FaqController::class, 'createFaqs'])
+        ->name('faqs-create');
+    Route::post('faqs-create', [FaqController::class, 'storeFaqs'])
+        ->name('faqs-create');
+    Route::get('faqs', [FaqController::class, 'allFaqs'])->name('faqs-all');
+    Route::get('faqs-edit/{id}', [FaqController::class, 'editFaqs'])
+        ->name('faqs-edit');
+    Route::put('faqs-edit/{id}', [FaqController::class, 'updateFaqs'])
+        ->name('faqs-update');
+    Route::delete('faqs-delete', [FaqController::class, 'deleteFaqs'])
+        ->name('faqs-delete');
 
     //Post Management
     Route::put('post-categories/{postCategory}/toggle-status', [ChangePostCategoryStatusController::class, 'change'])

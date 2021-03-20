@@ -7,7 +7,7 @@ use App\Http\Controllers\Post\BlogController;
 use App\Http\Controllers\Post\PostCategoryController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Faq\FaqController;
 //Test
 Route::get('test', [TestController::class, 'test'])
     ->name('test');
@@ -16,7 +16,8 @@ Route::get('/', HomeController::class)
     ->name('home');
 Route::post('google-2fa/verify', [VerifyGoogle2faController::class, 'verify'])
     ->name('profile.google-2fa.verify');
-
+Route::get('faqs', [FaqController::class, 'showFaqs'])
+    ->name('faqs.show');
 //Blog
 Route::get('blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('blog/category/{postCategory}', [PostCategoryController::class, 'index'])->name('blog.category');
