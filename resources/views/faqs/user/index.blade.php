@@ -6,7 +6,7 @@
             <section class="faq-area" id="faq">
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-lg-8 text-center">
+                        <div class="col-sm-8 text-center">
                             <div class="section-title">
                                 <h1><em>Frequently Questions</em></h1>
                                 <p></p>
@@ -14,14 +14,14 @@
                         </div>
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-md-9">
-                            <img src="{{asset('images/FAQ.png')}}"/>
+                        <div class="col-sm-9">
+                            <img src="{{asset('images/FAQ.png')}}" style="width: 100%;height:100%"/>
                         </div>
                     </div>
                     <div class="row mt-5">
                         @foreach($faq as $key => $data)
                             @if($key++ % 2)
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 col-sm-12">
                                     <div id="accordion{{$data->id}}" class="accordion-wrapper">
                                         <div class="card">
                                             <div class="card-header" id="headingOne{{$data->id}}">
@@ -46,7 +46,7 @@
                                     </div>
                                 </div>
                             @else
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 col-sm-12">
                                     <div id="accordion_2{{$data->id}}" class="accordion-wrapper">
                                         <div class="card">
                                             <div class="card-header" id="headingTwo_2{{$data->id}}">

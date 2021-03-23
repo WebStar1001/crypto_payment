@@ -5,8 +5,9 @@
 /storage/debugbar/
 /packages
 /vendor
-/.idea
+/.idea/*.*
 .env
+.htaccess
 .env.backup
 .phpunit.result.cache
 Homestead.json
