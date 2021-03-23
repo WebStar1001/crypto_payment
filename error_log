@@ -1,0 +1,2 @@
+[14-Mar-2021 15:47:06 UTC] PHP Warning:  require(/home/coinirq2/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home/coinirq2/public_html/index.php on line 28
+[14-Mar-2021 15:47:06 UTC] PHP Fatal error:  require(): Failed opening required '/home/coinirq2/public_html/../vendor/autoload.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home/coinirq2/public_html/index.php on line 28
