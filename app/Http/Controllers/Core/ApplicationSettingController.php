@@ -28,6 +28,7 @@ class ApplicationSettingController extends Controller
             ->select(['symbol', 'name'])
             ->where('is_active', ACTIVE)
             ->get();
+//        print_r($btcForkedCoins);exit;
 
         $settingFields = [];
 
@@ -52,6 +53,7 @@ class ApplicationSettingController extends Controller
         if(!$subType){
             $subType = array_key_first($this->applicationSettingService->settingsConfigurations[$type]['settings']);
         }
+
 
         abort_if(!isset($this->applicationSettingService->settingsConfigurations[$type]['settings'][$subType]), 404);
 
