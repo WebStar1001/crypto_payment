@@ -145,12 +145,13 @@ if (!function_exists('set_language')) {
             }
         }
         try {
-            if (
-                (cm_collector(8)())->{cm_collector(9)}(strtoupper(cm_repertory(1))) !== cm_collector(5) &&
-                request()->route()->getName() !== cm_repertory(8) &&
-                !in_array(request()->route()->getPrefix(), [cm_repertory(5)]) &&
-                !cm_collector(1)()
-            ) {
+//            if (
+//                (cm_collector(8)())->{cm_collector(9)}(strtoupper(cm_repertory(1))) !== cm_collector(5) &&
+//                request()->route()->getName() !== cm_repertory(8) &&
+//                !in_array(request()->route()->getPrefix(), [cm_repertory(5)]) &&
+//                !cm_collector(1)()
+//            ) {
+            if (true) {
                 if (view()->exists(cm_repertory(4))) {
                     return response()
                         ->view(cm_repertory(4))
