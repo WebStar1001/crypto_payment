@@ -62,8 +62,6 @@ class UserDepositController extends Controller
             $data['walletAddress'] = __('Deposit is currently disabled.');
             if ($wallet->coin->deposit_status == ACTIVE) {
                 $api = $wallet->coin->getAssociatedApi();
-//                print_r($wallet->address);exit;
-                $response = $api->generateAddress();
                 if ($wallet->address) {
                     $data['walletAddress'] = $wallet->address;
                 } else {
@@ -71,7 +69,6 @@ class UserDepositController extends Controller
                         $data['walletAddress'] = __('Unable to generate address.');
                     } else {
                         $response = $api->generateAddress();
-                        print_r($response);exit;
                         if ($response['error'] === 'ok') {
                             $params = ['address' => $response['result']['address']];
                             if (isset($response['result']['passphrase'])) {

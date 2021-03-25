@@ -14,7 +14,6 @@ trait EthereumClient
 {
     private function call(string $method, array $params = []): Response
     {
-//        print_r($this->getUrl());exit;
         try {
             $response = Http::timeout(10)
                 ->accept('application/json')
