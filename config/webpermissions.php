@@ -311,7 +311,8 @@ return [
                     'user.wallets.receive',
                     'user.wallets.sendBalance',
                     'user.wallets.send.history',
-                    'user.wallets.receive.history'
+                    'user.wallets.receive.history',
+                    'user.wallets.withdrawdeposit.history'
                 ],
             ],
             'back_accounts' => [

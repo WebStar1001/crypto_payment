@@ -20,16 +20,20 @@
                         @foreach($dataTable['items'] as $key=>$wallet)
                             <tr>
                                 <td>
-                                    <img src="{{ get_coin_icon($wallet->coin->icon) }}" alt="Item Emoji" class="img-table cm-center mr-2">
+                                    <img src="{{ get_coin_icon($wallet->coin->icon) }}" alt="Item Emoji"
+                                         class="img-table cm-center mr-2">
                                     {{ $wallet->symbol }}
                                 </td>
                                 <td>{{ $wallet->coin->name }}</td>
                                 <td>{{ $wallet->primary_balance }}</td>
                                 <td>{{ $wallet->on_order_balance ?? bcmul(0,1)  }}</td>
                                 <td class="lf-action text-right">
-                                    <a class="btn btn-sm btn-success" href="{{ route('user.wallets.withdrawdeposit.history', $wallet->symbol) }}">
-                                        <i class="fa fa-eye"></i>Deposit & Withdraw History
-                                    </a>
+                                    @if( has_permission('user.wallets.withdrawdeposit.history'))
+                                        <a class="btn btn-sm btn-success"
+                                           href="{{ route('user.wallets.withdrawdeposit.history', $wallet->symbol) }}">
+                                            <i class="fa fa-eye"></i>Deposit & Withdraw History
+                                        </a>
+                                    @endif
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-info dropdown-toggle"
                                                 data-toggle="dropdown" aria-expanded="false">

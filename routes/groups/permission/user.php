@@ -91,7 +91,7 @@ Route::get('wallets/send/history', SendHistoryController::class)
     ->name('user.wallets.send.history');
 Route::get('wallets/receive/history', ReceiveHistoryController::class)
     ->name('user.wallets.receive.history');
-Route::get('wallets/withdrawdeposit/history', [UserWalletController::class, 'withdraw_deposit_history'])
+Route::get('wallets/{wallet}/withdrawdeposit/history', [UserWalletController::class, 'withdraw_deposit_history'])
     ->name('user.wallets.withdrawdeposit.history');
 //Deposit
 Route::resource('wallets/{wallet}/deposits', UserDepositController::class)->except('edit')
