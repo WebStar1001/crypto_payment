@@ -18578,7 +18578,7 @@ table.dataTable thead .sorting_desc_disabled::after {
 
 .graph-loader {
   height: 451px;
-  background: url(/images/progress-bar.gif?cb17b80a942d7c317a35ff1324fae12f) no-repeat center;
+  background: url(/public/images/progress-bar.gif?cb17b80a942d7c317a35ff1324fae12f) no-repeat center;
   background-size: 150px;
 }
 
