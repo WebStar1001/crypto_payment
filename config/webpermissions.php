@@ -341,7 +341,8 @@ return [
             'order' => [
                 ROUTE_GROUP_READER_ACCESS => [
                     'user.open.order',
-                    'order.index'
+                    'order.index',
+                    'user.orders.index'
                 ],
                 ROUTE_GROUP_CREATION_ACCESS => [
                     'user.order.store',
