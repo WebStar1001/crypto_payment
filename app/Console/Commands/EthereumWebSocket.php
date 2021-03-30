@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Amp\Loop;
 use Amp\Websocket;
 use App\Jobs\Ethereum\EthereumBlockJob;
+use App\Services\Logger\Logger;
 use Illuminate\Console\Command;
 
 class EthereumWebSocket extends Command
@@ -29,8 +30,9 @@ class EthereumWebSocket extends Command
         Loop::run(function () {
             $connection = yield Websocket\Client\connect(settings('ethereum_websocket_url'));
             yield $connection->send('{"jsonrpc":"2.0", "id": 1, "method": "eth_subscribe", "params": ["newHeads"]}');
-
+            Logger::error('sent', "[FAILED][ProcessLimitOrderService][process]");
             while ($message = yield $connection->receive()) {
+                Logger::error('Received', "[FAILED][ProcessLimitOrderService][process]");
                 $payload = yield $message->buffer();
                 $response = json_decode($payload, true);
 
