@@ -33,7 +33,7 @@ class EthereumWebSocket extends Command
             while ($message = yield $connection->receive()) {
                 $payload = yield $message->buffer();
                 $response = json_decode($payload, true);
-
+                $this->info('sent');
                 if (isset($response['params']['result']['hash'])) {
                     EthereumBlockJob::dispatch($response['params']['result']['hash']);
                 }
